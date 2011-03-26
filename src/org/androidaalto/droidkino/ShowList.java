@@ -23,37 +23,37 @@ public class ShowList extends Activity {
         setContentView(R.layout.main);
         
         //Creating a static list of shows
-        List<Show> showList = new ArrayList<Show>();
-        showList.add(new Show());
-        showList.add(new Show());
-        showList.add(new Show());
-        showList.add(new Show());
-        showList.add(new Show());
-        showList.add(new Show());
-        showList.add(new Show());
-        showList.add(new Show());
-        showList.add(new Show());
-        
-         	 ListView lv= (ListView)findViewById(R.id.listview);
-        	
-        	// create the grid item mapping
-        	String[] from = new String[] {"title", "time", "teathre"};
-        	int[] to = new int[] { R.id.item1, R.id.item2, R.id.item3};
-        		 
-        		        // prepare the list of all records
-        			    Show show = null;
-        		        List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-        		        for(int i = 0; i < showList.size(); i++){
-        		        	show = showList.get(i);
-        		            HashMap<String, String> map = new HashMap<String, String>();
-        		            map.put("title", show.getTitle());
-        		            map.put("time", show.getDttmShowStart().toString());
-        		            map.put("teathre", show.getTheatre());
-        		            fillMaps.add(map);
-        		        }
-        		 
-        		        // fill in the grid_item layout
-        		        SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.grid_item, from, to);
-        		        lv.setAdapter(adapter);
-        		    }
+        List<Show> showList = null;
+		try {
+			showList = Parser.retrieveShows();
+			
+		} catch (Exception e) {
+			// TODO Show the error in a toast alert
+			e.printStackTrace();
+		}
+		if (showList!=null)
+		{
+			ListView lv= (ListView)findViewById(R.id.listview);
+	    	
+	    	// create the grid item mapping
+	    	String[] from = new String[] {"title", "time", "teathre"};
+	    	int[] to = new int[] { R.id.item1, R.id.item2, R.id.item3};
+		 
+	        // prepare the list of all records
+		    Show show = null;
+	        List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
+	        for(int i = 0; i < showList.size(); i++){
+	        	show = showList.get(i);
+	            HashMap<String, String> map = new HashMap<String, String>();
+	            map.put("title", show.getTitle());
+	            map.put("time", show.getDttmShowStart().toString());
+	            map.put("teathre", show.getTheatre());
+	            fillMaps.add(map);
+	        }
+	 
+	        // fill in the grid_item layout
+	        SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.grid_item, from, to);
+	        lv.setAdapter(adapter);
+	    }
+	}
 }

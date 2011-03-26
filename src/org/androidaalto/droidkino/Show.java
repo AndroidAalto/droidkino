@@ -7,7 +7,7 @@ import java.util.List;
 public class Show {
 
 	private long id;
-	private Date dttmShowStart;
+	private String dttmShowStart;
 	private long eventId;
 	private String title;
 	private String originalTitle;
@@ -36,8 +36,8 @@ public class Show {
     	eventSmallImagePortraits = new ArrayList<String>();
     	eventLargeImagePortraits = new ArrayList<String>();
     	
-    	id = 1;
-    	dttmShowStart = new Date();
+    	/*id = 1;
+    	dttmShowStart = "2011-03-26T11:15:00";
     	eventId = 1;
     	title = "War Stars";
     	originalTitle = "War Stars";
@@ -62,7 +62,7 @@ public class Show {
         eventSmallImagePortraits.add("http://media.finnkino.fi/1012/Event_7521/portrait_small/Yogi_Bear_99a.jpg");
         eventLargeImagePortraits = new ArrayList<String>();
         eventLargeImagePortraits.add("http://media.finnkino.fi/1012/Event_7521/portrait_large/Yogi_Bear_99a.jpg");
-        
+        */
     	
     }
 	public long getId() {
@@ -71,10 +71,10 @@ public class Show {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getDttmShowStart() {
+	public String getDttmShowStart() {
 		return dttmShowStart;
 	}
-	public void setDttmShowStart(Date dttmShowStart) {
+	public void setDttmShowStart(String dttmShowStart) {
 		this.dttmShowStart = dttmShowStart;
 	}
 	public long getEventId() {
