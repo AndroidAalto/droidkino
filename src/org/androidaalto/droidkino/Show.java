@@ -24,7 +24,7 @@ public class Show {
     private String theatreAuditorium;
     private String theatreAndAuditorium;
     private String presentationMethodAndLanguage;
-    private String PresentationMethod;
+    private String presentationMethod;
     //private List<String> eventSeries;
     private String showUrl;
     private String eventUrl;
@@ -35,6 +35,34 @@ public class Show {
     {
     	eventSmallImagePortraits = new ArrayList<String>();
     	eventLargeImagePortraits = new ArrayList<String>();
+    	
+    	id = 1;
+    	dttmShowStart = new Date();
+    	eventId = 1;
+    	title = "War Stars";
+    	originalTitle = "War Stars";
+    	productionYear = 1960;
+    	lenghtInMinutes = 120;
+    	dtLocalRelease = new Date();
+    	raiting = 'S';
+    	ratingLabel = 'S';
+    	ratingImageUrl = "https://media.finnkino.fi/images/rating_large_S.png";
+    	genres = "Seikkailu, Animaatio, Komedia, 3D";
+    	theathreId = 1034;
+        theatreAuditriumID = 1278;
+        theatre = "Kinopalatsi Helsinki";
+        theatreAuditorium = "sali 2";
+        theatreAndAuditorium = "Kinopalatsi Helsinki, sali 2";
+        presentationMethodAndLanguage = "3D, suomi";
+        presentationMethod = "3D";
+        //List<String> eventSeries;
+        showUrl = "http://www.finnkino.fi/Websales/Show/180848/";
+        eventUrl = "http://www.finnkino.fi/Event/298365/";
+        eventSmallImagePortraits = new ArrayList<String>();
+        eventSmallImagePortraits.add("http://media.finnkino.fi/1012/Event_7521/portrait_small/Yogi_Bear_99a.jpg");
+        eventLargeImagePortraits = new ArrayList<String>();
+        eventLargeImagePortraits.add("http://media.finnkino.fi/1012/Event_7521/portrait_large/Yogi_Bear_99a.jpg");
+        
     	
     }
 	public long getId() {
@@ -147,10 +175,10 @@ public class Show {
 		this.presentationMethodAndLanguage = presentationMethodAndLanguage;
 	}
 	public String getPresentationMethod() {
-		return PresentationMethod;
+		return presentationMethod;
 	}
 	public void setPresentationMethod(String presentationMethod) {
-		PresentationMethod = presentationMethod;
+		this.presentationMethod = presentationMethod;
 	}
 	public String getShowUrl() {
 		return showUrl;
