@@ -13,7 +13,7 @@
         <TextView android:id="@+id/item1"
             android:layout_height="fill_parent"
             android:layout_width="wrap_content"
-            android:width="100dip"
+            android:width="115dip"
             android:height="30dip"
             android:text="movie"
         />
@@ -21,14 +21,14 @@
             android:layout_height="fill_parent"
             android:layout_width="wrap_content"
             android:text="date / time"
-            android:width="120dip"
+            android:width="75dip"
             android:height="30dip"
         />
         <TextView android:id="@+id/item3"
             android:layout_height="fill_parent"
             android:layout_width="wrap_content"
             android:text="kino"
-            android:width="100dip"
+            android:width="130dip"
             android:height="30dip"
         />
     </LinearLayout>

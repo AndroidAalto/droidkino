@@ -7,19 +7,19 @@
             android:text="title"
             android:layout_height="fill_parent"
             android:layout_width="wrap_content"
-            android:width="100dip"
+            android:width="115dip"
         />
         <TextView android:id="@+id/item2"
             android:text="time"
             android:layout_height="fill_parent"
             android:layout_width="wrap_content"
-            android:width="120dip"
+            android:width="75dip"
         />
         <TextView android:id="@+id/item3"
             android:text="kino"
             android:layout_height="fill_parent"
             android:layout_width="wrap_content"
-            android:width="100dip"
+            android:width="130dip"
         />
 
 </LinearLayout>

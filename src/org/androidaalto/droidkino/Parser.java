@@ -39,23 +39,30 @@ public class Parser {
 		
 		Element schedule = (Element) ((NodeList) doc.getElementsByTagName("Schedule")).item(0);
 		Element shows = (Element) ((NodeList) schedule.getElementsByTagName("Shows")).item(0);
-		NodeList nodeList = (NodeList) schedule.getElementsByTagName("Show");
+		NodeList showNodeList = (NodeList) schedule.getElementsByTagName("Show");
 
 		Show show = null;
-		for (int i = 0; i < 10; i++) {
-			Element showElement = (Element) nodeList.item(i);
-			Node ddtmShowStart = ((NodeList)showElement.getElementsByTagName("dttmShowStart")).item(0);
-			Node title = ((NodeList)showElement.getElementsByTagName("Title")).item(0);
-			Node teathre = ((NodeList)showElement.getElementsByTagName("TheatreAndAuditorium")).item(0);
-			
-			show = new Show();
-			show.setDttmShowStart(ddtmShowStart.getNodeValue());
-			show.setTitle(title.getNodeValue());			
-			show.setTheatre(teathre.getNodeValue());
-			showList.add(show);
+		for (int i = 0; i < showNodeList.getLength()-1; i++) {
+			Node showNode = showNodeList.item(i); 
+			if (showNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element showElement = (Element) showNode;
+				
+				show = new Show();
+				show.setDttmShowStart(getTagValue(showElement, "dttmShowStart"));
+				show.setTitle(getTagValue(showElement, "Title"));			
+				show.setTheatre(getTagValue(showElement, "TheatreAndAuditorium"));
+				showList.add(show);
+			}
 			
 		}
 		return showList;		
 	}
+	
+	private static String getTagValue(Element eElement, String sTag) {
+	    NodeList nlList= eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+	    Node nValue = (Node) nlList.item(0); 
+	 
+	    return nValue.getNodeValue();    
+	 }
 
 }
