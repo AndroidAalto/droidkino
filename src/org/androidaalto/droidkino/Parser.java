@@ -37,10 +37,10 @@ import org.xml.sax.InputSource;
 
 public class Parser {
 	
-	public static List<Show> retrieveShows() throws Exception
+	public static List<MovieInfo> retrieveShows() throws Exception
 	{
 		
-		List<Show> showList = new ArrayList<Show>();
+		List<MovieInfo> movieList = new ArrayList<MovieInfo>();
         
 		Document doc = null;
 		try
@@ -62,21 +62,21 @@ public class Parser {
 		Element shows = (Element) ((NodeList) schedule.getElementsByTagName("Shows")).item(0);
 		NodeList showNodeList = (NodeList) schedule.getElementsByTagName("Show");
 
-		Show show = null;
+		MovieInfo movie = null;
 		for (int i = 0; i < showNodeList.getLength()-1; i++) {
 			Node showNode = showNodeList.item(i); 
 			if (showNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element showElement = (Element) showNode;
 				
-				show = new Show();
-				show.setDttmShowStart(getTagValue(showElement, "dttmShowStart"));
-				show.setTitle(getTagValue(showElement, "Title"));			
-				show.setTheatre(getTagValue(showElement, "TheatreAndAuditorium"));
-				showList.add(show);
+				movie = new MovieInfo();
+				movie.setDttmShowStart(getTagValue(showElement, "dttmShowStart"));
+				movie.setTitle(getTagValue(showElement, "Title"));			
+				movie.setTheatre(getTagValue(showElement, "TheatreAndAuditorium"));
+				movieList.add(movie);
 			}
 			
 		}
-		return showList;		
+		return movieList;		
 	}
 	
 	private static String getTagValue(Element eElement, String sTag) {

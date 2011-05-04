@@ -27,47 +27,28 @@
     android:orientation="vertical"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent">
-    <!-- Header -->
-    <LinearLayout android:id="@+id/header"
-        android:background="#ff347c12"
+    <RadioGroup
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        >
-        <TextView android:id="@+id/item1"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:width="115dip"
-            android:height="30dip"
-            android:text="movie"
-        />
-        <TextView android:id="@+id/item2"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:text="date / time"
-            android:width="75dip"
-            android:height="30dip"
-        />
-        <TextView android:id="@+id/item3"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:text="kino"
-            android:width="130dip"
-            android:height="30dip"
-        />
-    </LinearLayout>
- 
-    <!-- List Divider -->
-    <View android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="?android:attr/listDivider" />
- 
-    <!-- ListView (grid_items) -->
-    <LinearLayout android:id="@+id/layout"
+        android:orientation="vertical"
+        android:checkedButton="@+id/kino"
+        android:id="@+id/menu_theather">
+        <RadioButton
+            android:text="Kinopalatsi"
+            android:id="@+id/kino"/>
+        <RadioButton
+            android:text="Maxim"
+            android:id="@+id/maxi"/>
+        <RadioButton
+            android:text="Tennispalatsi"
+            android:id="@+id/tenn"/>
+        <RadioButton
+            android:text="Omena"
+            android:id="@+id/omen"/>
+    </RadioGroup>
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent">
-        <ListView android:id="@+id/listview"
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent">
-        </ListView>
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="Search movies"
+        android:id="@+id/search"/>
 </LinearLayout>

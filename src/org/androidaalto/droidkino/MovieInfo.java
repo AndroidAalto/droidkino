@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Show {
+public class MovieInfo {
 
 	private long id;
 	private String dttmShowStart;
@@ -52,38 +52,10 @@ public class Show {
     private List<String> eventSmallImagePortraits;
     private List<String> eventLargeImagePortraits;
     
-    public Show()
+    public MovieInfo()
     {
     	eventSmallImagePortraits = new ArrayList<String>();
     	eventLargeImagePortraits = new ArrayList<String>();
-    	
-    	/*id = 1;
-    	dttmShowStart = "2011-03-26T11:15:00";
-    	eventId = 1;
-    	title = "War Stars";
-    	originalTitle = "War Stars";
-    	productionYear = 1960;
-    	lenghtInMinutes = 120;
-    	dtLocalRelease = new Date();
-    	raiting = 'S';
-    	ratingLabel = 'S';
-    	ratingImageUrl = "https://media.finnkino.fi/images/rating_large_S.png";
-    	genres = "Seikkailu, Animaatio, Komedia, 3D";
-    	theathreId = 1034;
-        theatreAuditriumID = 1278;
-        theatre = "Kinopalatsi Helsinki";
-        theatreAuditorium = "sali 2";
-        theatreAndAuditorium = "Kinopalatsi Helsinki, sali 2";
-        presentationMethodAndLanguage = "3D, suomi";
-        presentationMethod = "3D";
-        //List<String> eventSeries;
-        showUrl = "http://www.finnkino.fi/Websales/Show/180848/";
-        eventUrl = "http://www.finnkino.fi/Event/298365/";
-        eventSmallImagePortraits = new ArrayList<String>();
-        eventSmallImagePortraits.add("http://media.finnkino.fi/1012/Event_7521/portrait_small/Yogi_Bear_99a.jpg");
-        eventLargeImagePortraits = new ArrayList<String>();
-        eventLargeImagePortraits.add("http://media.finnkino.fi/1012/Event_7521/portrait_large/Yogi_Bear_99a.jpg");
-        */
     	
     }
 	public long getId() {
