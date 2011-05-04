@@ -21,11 +21,13 @@ public class MovieList extends ListActivity{
 	DroidkinoMain kino;
 	String requestedlocation;
 	
+	
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
             getResquestedList();
+            
 	}
 	
 	void getResquestedList(){
@@ -59,6 +61,8 @@ public class MovieList extends ListActivity{
 	    setListAdapter(movieAdapter);
 		    
 	}
+	
+
 		
 }
 	

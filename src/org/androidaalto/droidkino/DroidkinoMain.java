@@ -23,6 +23,7 @@ package org.androidaalto.droidkino;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,31 +36,35 @@ public class DroidkinoMain extends Activity {
 	RadioButton theather1,theather2, theather3,theather4;
 	RadioGroup group;
 	String theatherRequest;
-    
+	Button button;
+	ProgressDialog pd;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        Button button = (Button)findViewById(R.id.search);
+        
+        button = (Button)findViewById(R.id.search);
         theather1 = (RadioButton)findViewById(R.id.kino);
         theather2 = (RadioButton)findViewById(R.id.maxi);
         theather3 = (RadioButton)findViewById(R.id.omen);
         theather4 = (RadioButton)findViewById(R.id.tenn);
         group = (RadioGroup)findViewById(R.id.menu_theather);
+        
+       
         button.setOnClickListener(new Button.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(v.getContext(), MovieList.class);
+				show(6);
                 startActivity(intent);
-
 			}
-        });      
+    	});
         
     }
-    
+	
     public String getCheckedThether(){
     	int id=group.getCheckedRadioButtonId();
         if(theather1.getId() == id){theatherRequest ="Kinopalatsi Helsinki";}
@@ -67,6 +72,22 @@ public class DroidkinoMain extends Activity {
         if(theather3.getId() == id){theatherRequest ="Tenispalatsi";}
         if(theather4.getId() == id){theatherRequest ="Omena Espoo";}
         return theatherRequest;
+    }
+    
+    public void show(final int seconds)
+    {
+    	pd = ProgressDialog.show(this, "", "Searching movies...");
+    	
+    	new Thread(new Runnable(){
+    		public void run(){
+    			try {
+					Thread.sleep(seconds * 1000);
+					pd.dismiss();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+    		}
+    	}).start();
     }
     
 }
