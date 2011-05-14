@@ -24,7 +24,7 @@ package org.androidaalto.droidkino;
 
 import java.util.List;
 
-import org.androidaaltro.droidkino.service.DataFetchService;
+import org.androidaalto.droidkino.service.DataFetchService;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
