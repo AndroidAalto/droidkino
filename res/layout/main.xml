@@ -1,35 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
-		/*******************************************************************************
+<!--
+/*******************************************************************************
 
-		Copyright: 2011 Android Aalto Community This file is part of
-		Droidkino. Droidkino is free software; you can redistribute it and/or
-		modify it under the terms of the GNU General Public License as
-		published by the Free Software Foundation; either version 2 of the
-		License, or (at your option) any later version. Droidkino is
-		distributed in the hope that it will be useful, but WITHOUT ANY
-		WARRANTY; without even the implied warranty of MERCHANTABILITY or
-		FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-		for more details. You should have received a copy of the GNU General
-		Public License along with Droidkino; if not, write to the Free
-		Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-		02110-1301 USA
+   Copyright: 2011 Android Aalto Community
 
-		******************************************************************************/
-	-->
-<LinearLayout android:id="@+id/main"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_height="fill_parent"
-	android:layout_width="fill_parent">
-	<RadioGroup android:layout_width="match_parent"
-		android:layout_height="wrap_content" android:orientation="vertical"
-		android:checkedButton="@+id/kino" android:id="@+id/menu_theather">
-		<RadioButton android:text="Kinopalatsi" android:id="@+id/kino" />
-		<RadioButton android:text="Maxim" android:id="@+id/maxi" />
-		<RadioButton android:text="Tennispalatsi" android:id="@+id/tenn" />
-		<RadioButton android:text="Omena" android:id="@+id/omen" />
-	</RadioGroup>
-	<Button android:enabled="false" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="Search movies"
-		android:id="@+id/search" />
+   This file is part of Droidkino.
+
+   Droidkino is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   Droidkino is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Droidkino; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+ ******************************************************************************/
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<TextView 
+		android:layout_width="wrap_content" android:text="droidKINO"
+		android:layout_height="wrap_content" 
+		android:id="@+id/main_title"
+		android:textSize="45sp"></TextView>
+	<TableLayout  android:stretchColumns="0,1,2,3" android:layout_width="fill_parent" android:id="@+id/tableLayout1"
+		android:layout_height="fill_parent">
+		<TableRow android:id="@+id/tablerow_place" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView android:text="Place" android:id="@+id/table_place"
+				android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp"></TextView>
+			<Spinner android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
+		</TableRow>
+		<TableRow android:id="@+id/table_time" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView android:text="Period:" android:id="@+id/text_period"
+				android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp"></TextView>
+			<TextView android:text="18:30" android:id="@+id/text_start_time"
+				android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp"></TextView>
+			<TextView android:text=" to " android:id="@+id/txt_to"
+				android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp"></TextView>
+			<TextView android:text="21:30" android:id="@+id/text_end_time"
+				android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp"></TextView>
+		</TableRow>
+
+		<TableRow android:id="@+id/table_period"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<TextView android:text="Movie:" android:id="@+id/text_movie"
+				android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp"></TextView>
+			<Spinner android:layout_width="wrap_content" android:layout_height="wrap_content"></Spinner>
+		</TableRow>
+	</TableLayout>
+	<Button android:id="@+id/search" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 </LinearLayout>
