@@ -38,6 +38,7 @@
         </activity>
                 <activity android:name=".MovieList">
         </activity>
+                <service android:name="org.androidaaltro.droidkino.service.DataFetchService"></service>
         
 
     </application>

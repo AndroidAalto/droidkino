@@ -25,4 +25,5 @@
 <resources>
     <string name="finnkino">Finnkino</string>
     <string name="app_name">droidkino</string>
+    <string name="searching_movies">Searching movies...</string>
 </resources>

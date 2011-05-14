@@ -22,11 +22,14 @@
 
 package org.androidaalto.droidkino;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MovieInfo {
+public class MovieInfo implements Serializable {
+
+    private static final long serialVersionUID = -6630023918429921176L;
 
     private long id;
 

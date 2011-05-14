@@ -22,26 +22,50 @@
 
 package org.androidaalto.droidkino;
 
+import java.util.List;
+
+import org.androidaaltro.droidkino.service.DataFetchService;
+
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class DroidkinoMain extends Activity {
 
-    RadioButton theather1, theather2, theather3, theather4;
+    List<MovieInfo> moviesList;
 
-    RadioGroup group;
+    private Button button;
 
-    String theatherRequest;
+    final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
 
-    Button button;
+        @SuppressWarnings("unchecked")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(DroidKinoIntent.FETCH_FAILED.getAction())) {
+                Toast.makeText(DroidkinoMain.this, "Fetch failed", Toast.LENGTH_SHORT).show();
+            } else {
+                moviesList = (List<MovieInfo>) intent
+                        .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
+                Toast.makeText(DroidkinoMain.this, "Fetched " + moviesList.size() + "movies",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
-    ProgressDialog pd;
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(DroidKinoIntent.FETCH_COMPLETE.getAction());
+        filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
+        registerReceiver(mBroadcastReceiver, filter);
+        super.onResume();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,37 +73,20 @@ public class DroidkinoMain extends Activity {
         setContentView(R.layout.main);
 
         button = (Button) findViewById(R.id.search);
-        theather1 = (RadioButton) findViewById(R.id.kino);
-        theather2 = (RadioButton) findViewById(R.id.maxi);
-        theather3 = (RadioButton) findViewById(R.id.omen);
-        theather4 = (RadioButton) findViewById(R.id.tenn);
-        group = (RadioGroup) findViewById(R.id.menu_theather);
+        button.setOnClickListener(new OnClickListener() {
 
-        button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MovieList.class);
-                startActivity(intent);
+                Intent i = new Intent(DroidkinoMain.this, DataFetchService.class);
+                startService(i);
             }
         });
-
     }
 
-    public String getCheckedThether() {
-        int id = group.getCheckedRadioButtonId();
-        if (theather1.getId() == id) {
-            theatherRequest = "Kinopalatsi Helsinki";
-        }
-        if (theather2.getId() == id) {
-            theatherRequest = "Maxim Helsinki";
-        }
-        if (theather3.getId() == id) {
-            theatherRequest = "Tenispalatsi";
-        }
-        if (theather4.getId() == id) {
-            theatherRequest = "Omena Espoo";
-        }
-        return theatherRequest;
+    @Override
+    protected void onStop() {
+        unregisterReceiver(mBroadcastReceiver);
+        super.onPause();
     }
 
 }

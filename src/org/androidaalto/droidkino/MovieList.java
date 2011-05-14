@@ -44,7 +44,7 @@ public class MovieList extends ListActivity {
 
         @Override
         protected void onPreExecute() {
-            pd = ProgressDialog.show(MovieList.this, "", "Searching movies...");
+            pd = ProgressDialog.show(MovieList.this, "", getString(R.string.searching_movies));
             super.onPreExecute();
         }
 
