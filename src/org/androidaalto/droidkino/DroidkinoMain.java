@@ -32,6 +32,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -39,9 +42,31 @@ import android.widget.Toast;
 
 public class DroidkinoMain extends Activity {
 
+    private static final String LOG_TAG = DroidkinoMain.class.getCanonicalName();
+
+    private final static int ENABLE_BUTTON_MESSAGE = 0;
+
     List<MovieInfo> moviesList;
 
     private Button button;
+
+    private final Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+
+                case ENABLE_BUTTON_MESSAGE:
+                    button.setEnabled(true);
+                    break;
+
+                default:
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+
+    };
 
     final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
 
@@ -53,8 +78,10 @@ public class DroidkinoMain extends Activity {
             } else {
                 moviesList = (List<MovieInfo>) intent
                         .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
-                Toast.makeText(DroidkinoMain.this, "Fetched " + moviesList.size() + "movies",
-                        Toast.LENGTH_SHORT).show();
+                DroidKinoApplication app = (DroidKinoApplication) getApplication();
+                app.setMovies(moviesList);
+                Message m = mHandler.obtainMessage(ENABLE_BUTTON_MESSAGE);
+                mHandler.sendMessage(m);
             }
         }
     };
@@ -77,10 +104,15 @@ public class DroidkinoMain extends Activity {
 
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DroidkinoMain.this, DataFetchService.class);
-                startService(i);
+                Intent i = new Intent(DroidkinoMain.this, MovieList.class);
+                startActivity(i);
             }
         });
+
+        Log.d(LOG_TAG, "Starting the service");
+
+        Intent serviceIntent = new Intent(DroidkinoMain.this, DataFetchService.class);
+        startService(serviceIntent);
     }
 
     @Override

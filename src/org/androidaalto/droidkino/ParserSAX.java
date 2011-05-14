@@ -19,68 +19,64 @@
    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
  ******************************************************************************/
+
 package org.androidaalto.droidkino;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+public class ParserSAX extends DefaultHandler {
+    private Boolean isParam = false;
 
-public class ParserSAX extends DefaultHandler
-{
-	private Boolean isParam = false;
-	String param = "";
-	String Value;
+    String param = "";
 
-	public ParserSAX ()	{
-		super();
-	}
+    String Value;
 
-	@Override
-	public void startDocument() throws SAXException {
-		System.out.println("Start document");
-	}
+    public ParserSAX() {
+        super();
+    }
 
-	@Override
-	public void endDocument() throws SAXException {
-		System.out.println("End document");
-	}
+    @Override
+    public void startDocument() throws SAXException {
+        System.out.println("Start document");
+    }
 
-	@Override
-	public void startElement(String namespaceURI, String localName, String qName, Attributes atts)
-	throws SAXException {
-		//currentElement = true;
-		try {
-			if (localName.equalsIgnoreCase(param))
-				this.isParam = true;
-		}
-		catch (Exception e) {
-			System.out.println("startElement exception = " + e);
-		}
-	}
+    @Override
+    public void endDocument() throws SAXException {
+        System.out.println("End document");
+    }
 
-	@Override
-	public void endElement(String namespaceURI, String localName, String qName)
-	throws SAXException {
-		this.isParam = false;
-	}
+    @Override
+    public void startElement(String namespaceURI, String localName, String qName, Attributes atts)
+            throws SAXException {
+        // currentElement = true;
+        try {
+            if (localName.equalsIgnoreCase(param))
+                this.isParam = true;
+        } catch (Exception e) {
+            System.out.println("startElement exception = " + e);
+        }
+    }
 
-	@Override
-	public void characters(char[] ch, int start, int length) throws SAXException 
-	{
-		try {
-			if (isParam) {
-				String now = new String(ch, start, length);
-				Value = now; // done indirectly to be "safe", may be needless
-			}
-		}
-		catch (Exception ex) {
-			System.out.println("characters exception = " + ex);
-		}
-	}
+    @Override
+    public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
+        this.isParam = false;
+    }
 
+    @Override
+    public void characters(char[] ch, int start, int length) throws SAXException {
+        try {
+            if (isParam) {
+                String now = new String(ch, start, length);
+                Value = now; // done indirectly to be "safe", may be needless
+            }
+        } catch (Exception ex) {
+            System.out.println("characters exception = " + ex);
+        }
+    }
 
-	public String getResult() {
-		return Value;
-	}
+    public String getResult() {
+        return Value;
+    }
 }

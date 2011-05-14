@@ -57,7 +57,7 @@ public class Parser {
         NodeList showNodeList = (NodeList) schedule.getElementsByTagName("Show");
 
         MovieInfo movie = null;
-        
+
         for (int i = 0; i < showNodeList.getLength() - 1; i++) {
             Node showNode = showNodeList.item(i);
             if (showNode.getNodeType() == Node.ELEMENT_NODE) {
