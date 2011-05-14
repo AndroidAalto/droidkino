@@ -36,7 +36,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 public class Parser {
-
+   
     public static List<MovieInfo> retrieveShows() throws Exception {
 
         List<MovieInfo> movieList = new ArrayList<MovieInfo>();
@@ -57,12 +57,11 @@ public class Parser {
         NodeList showNodeList = (NodeList) schedule.getElementsByTagName("Show");
 
         MovieInfo movie = null;
-
+        
         for (int i = 0; i < showNodeList.getLength() - 1; i++) {
             Node showNode = showNodeList.item(i);
             if (showNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element showElement = (Element) showNode;
-
                 movie = new MovieInfo();
                 movie.setDttmShowStart(getTagValue(showElement, "dttmShowStart"));
                 movie.setTitle(getTagValue(showElement, "Title"));
