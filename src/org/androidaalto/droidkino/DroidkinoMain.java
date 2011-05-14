@@ -46,7 +46,7 @@ public class DroidkinoMain extends Activity {
 
     private final static int ENABLE_BUTTON_MESSAGE = 0;
 
-    List<MovieInfo> moviesList;
+    private List<MovieInfo> moviesList;
 
     private Button button;
 
@@ -68,6 +68,9 @@ public class DroidkinoMain extends Activity {
 
     };
 
+    /***
+     * BroadReceiver for getting the result of the data fetching
+     */
     final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
 
         @SuppressWarnings("unchecked")
@@ -80,6 +83,7 @@ public class DroidkinoMain extends Activity {
                         .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
                 DroidKinoApplication app = (DroidKinoApplication) getApplication();
                 app.setMovies(moviesList);
+                //We use an Handler for the sure that the action is done in the UI thread
                 Message m = mHandler.obtainMessage(ENABLE_BUTTON_MESSAGE);
                 mHandler.sendMessage(m);
             }
@@ -91,7 +95,8 @@ public class DroidkinoMain extends Activity {
         IntentFilter filter = new IntentFilter(DroidKinoIntent.FETCH_COMPLETE.getAction());
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
         registerReceiver(mBroadcastReceiver, filter);
-        super.onResume();
+        startDataFetchService();
+        super.onStart();
     }
 
     @Override
@@ -110,7 +115,9 @@ public class DroidkinoMain extends Activity {
         });
 
         Log.d(LOG_TAG, "Starting the service");
+    }
 
+    private void startDataFetchService() {
         Intent serviceIntent = new Intent(DroidkinoMain.this, DataFetchService.class);
         startService(serviceIntent);
     }
@@ -118,7 +125,7 @@ public class DroidkinoMain extends Activity {
     @Override
     protected void onStop() {
         unregisterReceiver(mBroadcastReceiver);
-        super.onPause();
+        super.onStop();
     }
 
 }
