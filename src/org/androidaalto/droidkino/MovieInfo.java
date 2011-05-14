@@ -23,6 +23,9 @@
 package org.androidaalto.droidkino;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -266,6 +269,15 @@ public class MovieInfo implements Serializable {
 
     public void setEventLargeImagePortraits(List<String> eventLargeImagePortraits) {
         this.eventLargeImagePortraits = eventLargeImagePortraits;
+    }
+    
+    public Date getStartingDate(){
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss"); //like 2011-05-14T11:00:00
+        try {
+            return formatter.parse(dttmShowStart);
+        } catch (ParseException e) {
+            return null; //not so bad returning null
+        }
     }
 
 }
