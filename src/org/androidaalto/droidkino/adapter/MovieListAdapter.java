@@ -1,6 +1,4 @@
 
-package org.androidaalto.droidkino.adapter;
-
 import java.util.Comparator;
 import java.util.List;
 
