@@ -19,6 +19,7 @@
    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
  ******************************************************************************/
+
 package org.androidaalto.droidkino;
 
 import java.net.URL;
@@ -34,56 +35,50 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-
 public class Parser {
-	
-	public static List<MovieInfo> retrieveShows() throws Exception
-	{
-		
-		List<MovieInfo> movieList = new ArrayList<MovieInfo>();
-        
-		Document doc = null;
-		try
-		{
-			URL url = new URL(
-			"http://www.finnkino.fi/xml/Schedule/");
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			doc = db.parse(new InputSource(url.openStream()));
-			doc.getDocumentElement().normalize();
-		}
-		catch(Exception e)
-		{
-			throw new Exception("unable to retreieve movies info", e);
-		}
-        
-		
-		Element schedule = (Element) ((NodeList) doc.getElementsByTagName("Schedule")).item(0);
-		Element shows = (Element) ((NodeList) schedule.getElementsByTagName("Shows")).item(0);
-		NodeList showNodeList = (NodeList) schedule.getElementsByTagName("Show");
 
-		MovieInfo movie = null;
-		for (int i = 0; i < showNodeList.getLength()-1; i++) {
-			Node showNode = showNodeList.item(i); 
-			if (showNode.getNodeType() == Node.ELEMENT_NODE) {
-				Element showElement = (Element) showNode;
-				
-				movie = new MovieInfo();
-				movie.setDttmShowStart(getTagValue(showElement, "dttmShowStart"));
-				movie.setTitle(getTagValue(showElement, "Title"));			
-				movie.setTheatre(getTagValue(showElement, "TheatreAndAuditorium"));
-				movieList.add(movie);
-			}
-			
-		}
-		return movieList;		
-	}
-	
-	private static String getTagValue(Element eElement, String sTag) {
-	    NodeList nlList= eElement.getElementsByTagName(sTag).item(0).getChildNodes();
-	    Node nValue = (Node) nlList.item(0); 
-	 
-	    return nValue.getNodeValue();    
-	 }
+    public static List<MovieInfo> retrieveShows() throws Exception {
+
+        List<MovieInfo> movieList = new ArrayList<MovieInfo>();
+
+        Document doc = null;
+        try {
+            URL url = new URL("http://www.finnkino.fi/xml/Schedule/");
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            doc = db.parse(new InputSource(url.openStream()));
+            doc.getDocumentElement().normalize();
+        } catch (Exception e) {
+            throw new Exception("unable to retreieve movies info", e);
+        }
+
+        Element schedule = (Element) ((NodeList) doc.getElementsByTagName("Schedule")).item(0);
+        Element shows = (Element) ((NodeList) schedule.getElementsByTagName("Shows")).item(0);
+        NodeList showNodeList = (NodeList) schedule.getElementsByTagName("Show");
+
+        MovieInfo movie = null;
+        
+        for (int i = 0; i < showNodeList.getLength() - 1; i++) {
+            Node showNode = showNodeList.item(i);
+            if (showNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element showElement = (Element) showNode;
+
+                movie = new MovieInfo();
+                movie.setDttmShowStart(getTagValue(showElement, "dttmShowStart"));
+                movie.setTitle(getTagValue(showElement, "Title"));
+                movie.setTheatre(getTagValue(showElement, "TheatreAndAuditorium"));
+                movieList.add(movie);
+            }
+
+        }
+        return movieList;
+    }
+
+    private static String getTagValue(Element eElement, String sTag) {
+        NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
+        Node nValue = (Node) nlList.item(0);
+
+        return nValue.getNodeValue();
+    }
 
 }
