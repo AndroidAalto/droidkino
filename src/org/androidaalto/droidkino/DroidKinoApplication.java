@@ -7,9 +7,11 @@ import java.util.List;
 import android.app.Application;
 
 /***
- * This class is like a shared memory for all the application.
- * Data saved in this class is available in all the activities of the application
- * You can get this object in any activity just calling the {@link Activity.getApplication()}
+ * This class is like a shared memory for all the application. Data saved in
+ * this class is available in all the activities of the application You can get
+ * this object in any activity just calling the {@link
+ * Activity.getApplication()}
+ * 
  * @author rciovati
  */
 public class DroidKinoApplication extends Application {
@@ -18,6 +20,7 @@ public class DroidKinoApplication extends Application {
 
     /***
      * Save the list of the movies
+     * 
      * @param movies
      */
     public void setMovies(List<MovieInfo> movies) {
@@ -26,7 +29,8 @@ public class DroidKinoApplication extends Application {
 
     /***
      * Returns a previous saved list of the movies
-     * @return 
+     * 
+     * @return
      */
     public List<MovieInfo> getMovies() {
         return movies;

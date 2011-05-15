@@ -1,3 +1,4 @@
+
 package org.androidaalto.droidkino.adapter;
 
 import java.util.Comparator;
@@ -14,8 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 /***
- * Basic implementation of a customer adapter to display the movie list.
- * It should also implement some stuff like filtering.
+ * Basic implementation of a customer adapter to display the movie list. It
+ * should also implement some stuff like filtering.
+ * 
  * @author rciovati
  */
 public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
@@ -69,7 +71,7 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
     }
 
     /***
-     * Sort the adapter content by movie start time 
+     * Sort the adapter content by movie start time
      */
     public void sortByStartTime() {
 
@@ -85,7 +87,9 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
     }
 
     /***
-     * Private class for hold already inflated views and avoid to inflate them again.
+     * Private class for hold already inflated views and avoid to inflate them
+     * again.
+     * 
      * @author rciovati
      */
     private class ViewCache {
