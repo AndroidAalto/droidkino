@@ -83,7 +83,8 @@ public class DroidkinoMain extends Activity {
                         .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
                 DroidKinoApplication app = (DroidKinoApplication) getApplication();
                 app.setMovies(moviesList);
-                //We use an Handler for the sure that the action is done in the UI thread
+                // We use an Handler for the sure that the action is done in the
+                // UI thread
                 Message m = mHandler.obtainMessage(ENABLE_BUTTON_MESSAGE);
                 mHandler.sendMessage(m);
             }

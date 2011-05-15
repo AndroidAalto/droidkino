@@ -270,14 +270,43 @@ public class MovieInfo implements Serializable {
     public void setEventLargeImagePortraits(List<String> eventLargeImagePortraits) {
         this.eventLargeImagePortraits = eventLargeImagePortraits;
     }
-    
-    public Date getStartingDate(){
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss"); //like 2011-05-14T11:00:00
+
+    public Date getStartingDate() {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss"); // like
+        // 2011-05-14T11:00:00
         try {
             return formatter.parse(dttmShowStart);
         } catch (ParseException e) {
-            return null; //not so bad returning null
+            return null; // not so bad returning null
         }
+    }
+
+    public MovieInfo copy() {
+        MovieInfo copy = new MovieInfo();
+        copy.id = id;
+        copy.dttmShowStart = dttmShowStart;
+        copy.eventId = eventId;
+        copy.title = title;
+        copy.originalTitle = originalTitle;
+        copy.productionYear = productionYear;
+        copy.lenghtInMinutes = lenghtInMinutes;
+        copy.dtLocalRelease = dtLocalRelease;
+        copy.raiting = raiting;
+        copy.ratingLabel = ratingLabel;
+        copy.ratingImageUrl = ratingImageUrl;
+        copy.genres = genres;
+        copy.theathreId = theathreId;
+        copy.theatreAuditriumID = theatreAuditriumID;
+        copy.theatre = theatre;
+        copy.theatreAuditorium = theatreAuditorium;
+        copy.theatreAndAuditorium = theatreAndAuditorium;
+        copy.presentationMethodAndLanguage = presentationMethodAndLanguage;
+        copy.presentationMethod = presentationMethod;
+        copy.showUrl = showUrl;
+        copy.eventUrl = eventUrl;
+        copy.eventSmallImagePortraits = eventSmallImagePortraits;
+        copy.eventLargeImagePortraits = eventLargeImagePortraits;
+        return copy;
     }
 
 }

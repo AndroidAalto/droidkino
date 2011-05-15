@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.androidaalto.droidkino.DroidKinoIntent;
 import org.androidaalto.droidkino.MovieInfo;
-import org.androidaalto.droidkino.Parser;
+import org.androidaalto.droidkino.xml.ParserFactory;
 
 import android.app.Service;
 import android.content.Intent;
@@ -35,15 +35,16 @@ import android.os.IBinder;
 import android.util.Log;
 
 /***
- * Service that fetch the movie list from the data source.
- * It fires:
- * <ul> 
- * <li>{@link DroidKinoIntent.FETCH_COMPLETE} if the fetching its ok. You can read the movies list in the {@link DroidKinoIntent.MOVIE_LIST_EXTRA} key.
- * <li>{@link DroidKinoIntent.FETCH_FAILED} if there was some problems during the fetch process</li>
+ * Service that fetch the movie list from the data source. It fires:
+ * <ul>
+ * <li>{@link DroidKinoIntent.FETCH_COMPLETE} if the fetching its ok. You can
+ * read the movies list in the {@link DroidKinoIntent.MOVIE_LIST_EXTRA} key.
+ * <li>{@link DroidKinoIntent.FETCH_FAILED} if there was some problems during
+ * the fetch process</li>
  * </ul>
  * After getting the data and firing the intent it shutdown automatically
+ * 
  * @author rciovati
- *
  */
 public class DataFetchService extends Service {
 
@@ -67,7 +68,7 @@ public class DataFetchService extends Service {
                 List<MovieInfo> showList = null;
 
                 try {
-                    showList = Parser.retrieveShows();
+                    showList = ParserFactory.getParser().parse();      
                     Intent completeIntent = DroidKinoIntent.FETCH_COMPLETE;
                     completeIntent.putExtra(DroidKinoIntent.MOVIE_LIST_EXTRA,
                             (Serializable) showList);
