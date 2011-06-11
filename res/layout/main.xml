@@ -60,8 +60,11 @@
 		</TableRow>
 
 		<TableRow>
-			<Button android:id="@+id/search" android:layout_width="wrap_content"
-				android:layout_height="wrap_content"></Button>
+			<Button android:id="@+id/search" 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/search"
+				></Button>
 		</TableRow>
 
 	</TableLayout>

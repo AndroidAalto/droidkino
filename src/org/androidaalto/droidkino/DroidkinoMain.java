@@ -27,10 +27,12 @@ import java.util.List;
 import org.androidaalto.droidkino.service.DataFetchService;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,9 +44,11 @@ import android.widget.Toast;
 
 public class DroidkinoMain extends Activity {
 
-    private static final String LOG_TAG = DroidkinoMain.class.getCanonicalName();
+    public static final String LOG_TAG = DroidkinoMain.class.getCanonicalName();
 
     private final static int ENABLE_BUTTON_MESSAGE = 0;
+
+    public static final String APP_PREFS_FILE = "appx prefs file";
 
     private List<MovieInfo> moviesList;
 
@@ -54,6 +58,7 @@ public class DroidkinoMain extends Activity {
 
         @Override
         public void handleMessage(Message msg) {
+            Log.d(LOG_TAG, "DroidkinoMain::handle");
             switch (msg.what) {
 
                 case ENABLE_BUTTON_MESSAGE:
@@ -76,6 +81,10 @@ public class DroidkinoMain extends Activity {
         @SuppressWarnings("unchecked")
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d(LOG_TAG, "onReceive");
+
+            fetchingXmlProgress.dismiss();
+            
             if (intent.getAction().equals(DroidKinoIntent.FETCH_FAILED.getAction())) {
                 Toast.makeText(DroidkinoMain.this, "Fetch failed", Toast.LENGTH_SHORT).show();
             } else {
@@ -91,13 +100,32 @@ public class DroidkinoMain extends Activity {
         }
     };
 
+    private ProgressDialog fetchingXmlProgress;
+
     @Override
     protected void onStart() {
+        super.onStart();
+        
         IntentFilter filter = new IntentFilter(DroidKinoIntent.FETCH_COMPLETE.getAction());
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
         registerReceiver(mBroadcastReceiver, filter);
+
+        DroidKinoApplication app = (DroidKinoApplication)getApplication();
+        if (app != null && app.getMovies().size() > 0) {
+            return;
+        }
+        
+        final SharedPreferences prefs = getSharedPreferences(APP_PREFS_FILE, MODE_PRIVATE);
+        
+        if (prefs.getBoolean(DataFetchService.SERVICE_WORKING, false)) {
+            return;
+        }
+               
         startDataFetchService();
-        super.onStart();
+        
+        fetchingXmlProgress = ProgressDialog.show(this, "", getString(R.string.fetching_movies));
+        fetchingXmlProgress.show();
+
     }
 
     @Override
