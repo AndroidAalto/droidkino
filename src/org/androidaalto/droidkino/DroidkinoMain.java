@@ -27,6 +27,7 @@ import java.util.List;
 import org.androidaalto.droidkino.service.DataFetchService;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -54,6 +55,7 @@ public class DroidkinoMain extends Activity {
 
         @Override
         public void handleMessage(Message msg) {
+            Log.d(LOG_TAG, "DroidkinoMain::handle");
             switch (msg.what) {
 
                 case ENABLE_BUTTON_MESSAGE:
@@ -76,6 +78,10 @@ public class DroidkinoMain extends Activity {
         @SuppressWarnings("unchecked")
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d(LOG_TAG, "onReceive");
+
+            fetchingXmlProgress.dismiss();
+            
             if (intent.getAction().equals(DroidKinoIntent.FETCH_FAILED.getAction())) {
                 Toast.makeText(DroidkinoMain.this, "Fetch failed", Toast.LENGTH_SHORT).show();
             } else {
@@ -91,11 +97,17 @@ public class DroidkinoMain extends Activity {
         }
     };
 
+    private ProgressDialog fetchingXmlProgress;
+
     @Override
     protected void onStart() {
         IntentFilter filter = new IntentFilter(DroidKinoIntent.FETCH_COMPLETE.getAction());
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
         registerReceiver(mBroadcastReceiver, filter);
+        
+        fetchingXmlProgress = ProgressDialog.show(this, "", getString(R.string.fetching_movies));
+        fetchingXmlProgress.show();
+        
         startDataFetchService();
         super.onStart();
     }

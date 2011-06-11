@@ -73,6 +73,7 @@ public class DataFetchService extends Service {
                     completeIntent.putExtra(DroidKinoIntent.MOVIE_LIST_EXTRA,
                             (Serializable) showList);
                     sendBroadcast(completeIntent);
+                    
                     Log.d(LOG_TAG, "Sent fetch complete broadcast... stopping the service");
                 } catch (Exception e) {
                     Log.e(LOG_TAG, e.getMessage());
