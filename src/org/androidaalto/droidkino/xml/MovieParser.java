@@ -20,8 +20,10 @@ package org.androidaalto.droidkino.xml;
 import java.util.List;
 
 import org.androidaalto.droidkino.*;
+
 /***
  * All the parser in Droidkino should implement this interface
+ * 
  * @author rciovati
  */
 public interface MovieParser {

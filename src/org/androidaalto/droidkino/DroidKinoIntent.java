@@ -4,7 +4,7 @@ package org.androidaalto.droidkino;
 import android.content.Intent;
 
 /***
- * Containts all the custom intent defined for DroidKino application
+ * Contains all the custom intent defined for DroidKino application
  * 
  * @author rciovati
  */
