@@ -51,6 +51,7 @@ import android.util.Log;
 public class DataFetchService extends Service {
 
     private static final String LOG_TAG = DataFetchService.class.getCanonicalName();
+
     public static final String SERVICE_WORKING = "fetch_service_working";
 
     @Override
@@ -65,37 +66,37 @@ public class DataFetchService extends Service {
         Log.d(LOG_TAG, "Started");
 
         final SharedPreferences prefs = getSharedPreferences(SERVICE_WORKING, MODE_PRIVATE);
-        
+
         Runnable r = new Runnable() {
 
             @Override
             public void run() {
                 List<MovieInfo> showList = null;
-                
+
                 Editor edit = prefs.edit();
-                
+
                 try {
                     edit.putBoolean(SERVICE_WORKING, true);
                     edit.commit();
 
-                    showList = ParserFactory.getParser().parse();      
-                    
+                    showList = ParserFactory.getParser().parse();
+
                     edit.putBoolean(SERVICE_WORKING, false);
                     edit.commit();
-                    
+
                     Intent completeIntent = DroidKinoIntent.FETCH_COMPLETE;
                     completeIntent.putExtra(DroidKinoIntent.MOVIE_LIST_EXTRA,
                             (Serializable) showList);
                     sendBroadcast(completeIntent);
-                    
+
                     Log.d(LOG_TAG, "Sent fetch complete broadcast... stopping the service");
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, e.getMessage());
+                    Log.e(LOG_TAG, "Error while fetching data", e);
                     sendBroadcast(DroidKinoIntent.FETCH_FAILED);
                 } finally {
                     stopSelf();
                 }
-                
+
             }
         };
 
