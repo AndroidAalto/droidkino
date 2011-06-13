@@ -21,8 +21,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 /***
  * Base class for all the finniko.fi's parsers
+ * 
  * @author rciovati
  */
 public abstract class BaseFinnkinoParser implements MovieParser {
@@ -42,16 +44,13 @@ public abstract class BaseFinnkinoParser implements MovieParser {
 
     protected final URL finnikoUrl;
 
-    public BaseFinnkinoParser() {
-        try {
-            this.finnikoUrl = new URL("http://www.finnkino.fi/xml/Schedule/");
-        } catch (MalformedURLException e) {
-            throw new RuntimeException();
-        }
+    public BaseFinnkinoParser() throws MalformedURLException {
+        this.finnikoUrl = new URL("http://www.finnkino.fi/xml/Schedule/");
     }
 
     /***
      * get an InputStream object to XMl of Finniko.fi website
+     * 
      * @return
      */
     protected InputStream getInputStream() {

@@ -60,7 +60,6 @@ public class DroidkinoMain extends Activity {
         public void handleMessage(Message msg) {
             Log.d(LOG_TAG, "DroidkinoMain::handle");
             switch (msg.what) {
-
                 case ENABLE_BUTTON_MESSAGE:
                     button.setEnabled(true);
                     break;
@@ -77,14 +76,13 @@ public class DroidkinoMain extends Activity {
      * BroadReceiver for getting the result of the data fetching
      */
     final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-
         @SuppressWarnings("unchecked")
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(LOG_TAG, "onReceive");
 
             fetchingXmlProgress.dismiss();
-            
+
             if (intent.getAction().equals(DroidKinoIntent.FETCH_FAILED.getAction())) {
                 Toast.makeText(DroidkinoMain.this, "Fetch failed", Toast.LENGTH_SHORT).show();
             } else {
@@ -92,7 +90,7 @@ public class DroidkinoMain extends Activity {
                         .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
                 DroidKinoApplication app = (DroidKinoApplication) getApplication();
                 app.setMovies(moviesList);
-                // We use an Handler for the sure that the action is done in the
+                // We use an Handler to make sure that the action is done in the
                 // UI thread
                 Message m = mHandler.obtainMessage(ENABLE_BUTTON_MESSAGE);
                 mHandler.sendMessage(m);
@@ -105,27 +103,25 @@ public class DroidkinoMain extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        
+
         IntentFilter filter = new IntentFilter(DroidKinoIntent.FETCH_COMPLETE.getAction());
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
         registerReceiver(mBroadcastReceiver, filter);
 
-        DroidKinoApplication app = (DroidKinoApplication)getApplication();
+        DroidKinoApplication app = (DroidKinoApplication) getApplication();
         if (app != null && app.getMovies().size() > 0) {
             return;
         }
-        
+
         final SharedPreferences prefs = getSharedPreferences(APP_PREFS_FILE, MODE_PRIVATE);
-        
+
         if (prefs.getBoolean(DataFetchService.SERVICE_WORKING, false)) {
             return;
         }
-               
-        startDataFetchService();
-        
-        fetchingXmlProgress = ProgressDialog.show(this, "", getString(R.string.fetching_movies));
-        fetchingXmlProgress.show();
 
+        fetchingXmlProgress = ProgressDialog.show(this, "", getString(R.string.fetching_movies));
+
+        startDataFetchService();
     }
 
     @Override
@@ -135,7 +131,6 @@ public class DroidkinoMain extends Activity {
 
         button = (Button) findViewById(R.id.search);
         button.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DroidkinoMain.this, MovieList.class);
@@ -156,5 +151,4 @@ public class DroidkinoMain extends Activity {
         unregisterReceiver(mBroadcastReceiver);
         super.onStop();
     }
-
 }

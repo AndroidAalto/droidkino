@@ -17,14 +17,18 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 package org.androidaalto.droidkino.xml;
 
+import java.net.MalformedURLException;
+
 import org.androidaalto.droidkino.xml.sax.FinnikoSAXParser;
+
 /***
  * This class manage the creation of the parser objects
+ * 
  * @author rciovati
  */
 public class ParserFactory {
 
-    public static MovieParser getParser() {
+    public static MovieParser getParser() throws MalformedURLException {
         return new FinnikoSAXParser();
     }
 

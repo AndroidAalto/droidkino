@@ -17,6 +17,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 package org.androidaalto.droidkino.xml.dom;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 public class FinnikoDOMParser extends BaseFinnkinoParser {
+
+    /**
+     * @throws MalformedURLException
+     */
+    public FinnikoDOMParser() throws MalformedURLException {
+        super();
+    }
 
     @Override
     public List<MovieInfo> parse() {
