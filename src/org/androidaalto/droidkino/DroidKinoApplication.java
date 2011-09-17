@@ -3,6 +3,8 @@ package org.androidaalto.droidkino;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import android.app.Application;
 
@@ -12,7 +14,7 @@ import android.app.Application;
  * this object in any activity just calling the {@link
  * Activity.getApplication()}
  * 
- * @author rciovati
+ * @author rciovati 
  */
 public class DroidKinoApplication extends Application {
 
@@ -34,6 +36,32 @@ public class DroidKinoApplication extends Application {
      */
     public List<MovieInfo> getMovies() {
         return movies;
+    }
+    
+    /***
+     * Returns a list of unique movie titles that are in the movie list of the app
+     * 
+     * @return
+     */
+    public List<String> getMovieTitles() {
+        SortedSet<String> movieTitles = new TreeSet<String>();
+        for (MovieInfo movieInfo : movies) {
+            movieTitles.add(movieInfo.getTitle());
+        }
+        return new ArrayList<String>(movieTitles);
+    }
+    
+    /***
+     * Returns a list of unique theatres that are in the movie list of the app (this might be hardcoded since the list is quite small and not changing much)
+     * 
+     * @return
+     */
+    public List<String> getTheatres() {
+        SortedSet<String> theathres = new TreeSet<String>();
+        for (MovieInfo movieInfo : movies) {
+            theathres.add(movieInfo.getTheatre());
+        }
+        return new ArrayList<String>(theathres);
     }
 
 }

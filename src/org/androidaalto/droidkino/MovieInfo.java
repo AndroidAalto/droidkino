@@ -44,48 +44,41 @@ public class MovieInfo implements Serializable {
 
     private String originalTitle;
 
-    private short productionYear;
+    private String productionYear;
 
-    private short lenghtInMinutes;
+    private String lenghtInMinutes;
 
-    private Date dtLocalRelease;
+    private String dtLocalRelease;
 
-    private char raiting;
-
-    private char ratingLabel;
-
-    private String ratingImageUrl;
+    private String ratingLabel;
 
     private String genres;
 
     private int theathreId;
 
-    private int theatreAuditriumID;
-
     private String theatre;
 
     private String theatreAuditorium;
 
-    private String theatreAndAuditorium;
+    private boolean is3D;
 
-    private String presentationMethodAndLanguage;
-
-    private String presentationMethod;
+    private String language;
 
     // private List<String> eventSeries;
     private String showUrl;
 
     private String eventUrl;
 
-    private List<String> eventSmallImagePortraits;
+    private String eventSmallImagePortrait;
 
-    private List<String> eventLargeImagePortraits;
+    private String eventLargeImagePortrait;
 
-    public MovieInfo() {
-        eventSmallImagePortraits = new ArrayList<String>();
-        eventLargeImagePortraits = new ArrayList<String>();
+    private String eventSmallImageLandscape;
 
-    }
+    private String eventLargeImageLandscape;
+
+    
+  
 
     public long getId() {
         return id;
@@ -127,52 +120,36 @@ public class MovieInfo implements Serializable {
         this.originalTitle = originalTitle;
     }
 
-    public short getProductionYear() {
+    public String getProductionYear() {
         return productionYear;
     }
 
-    public void setProductionYear(short productionYear) {
+    public void setProductionYear(String productionYear) {
         this.productionYear = productionYear;
     }
 
-    public short getLenghtInMinutes() {
+    public String getLenghtInMinutes() {
         return lenghtInMinutes;
     }
 
-    public void setLenghtInMinutes(short lenghtInMinutes) {
+    public void setLenghtInMinutes(String lenghtInMinutes) {
         this.lenghtInMinutes = lenghtInMinutes;
     }
 
-    public Date getDtLocalRelease() {
+    public String getDtLocalRelease() {
         return dtLocalRelease;
     }
 
-    public void setDtLocalRelease(Date dtLocalRelease) {
+    public void setDtLocalRelease(String dtLocalRelease) {
         this.dtLocalRelease = dtLocalRelease;
     }
 
-    public char getRaiting() {
-        return raiting;
-    }
-
-    public void setRaiting(char raiting) {
-        this.raiting = raiting;
-    }
-
-    public char getRatingLabel() {
+    public String getRatingLabel() {
         return ratingLabel;
     }
 
-    public void setRatingLabel(char ratingLabel) {
+    public void setRatingLabel(String ratingLabel) {
         this.ratingLabel = ratingLabel;
-    }
-
-    public String getRatingImageUrl() {
-        return ratingImageUrl;
-    }
-
-    public void setRatingImageUrl(String ratingImageUrl) {
-        this.ratingImageUrl = ratingImageUrl;
     }
 
     public String getGenres() {
@@ -191,14 +168,6 @@ public class MovieInfo implements Serializable {
         this.theathreId = theathreId;
     }
 
-    public int getTheatreAuditriumID() {
-        return theatreAuditriumID;
-    }
-
-    public void setTheatreAuditriumID(int theatreAuditriumID) {
-        this.theatreAuditriumID = theatreAuditriumID;
-    }
-
     public String getTheatre() {
         return theatre;
     }
@@ -215,28 +184,20 @@ public class MovieInfo implements Serializable {
         this.theatreAuditorium = theatreAuditorium;
     }
 
-    public String getTheatreAndAuditorium() {
-        return theatreAndAuditorium;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setTheatreAndAuditorium(String theatreAndAuditorium) {
-        this.theatreAndAuditorium = theatreAndAuditorium;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
-    public String getPresentationMethodAndLanguage() {
-        return presentationMethodAndLanguage;
+    public boolean is3D() {
+        return is3D;
     }
 
-    public void setPresentationMethodAndLanguage(String presentationMethodAndLanguage) {
-        this.presentationMethodAndLanguage = presentationMethodAndLanguage;
-    }
-
-    public String getPresentationMethod() {
-        return presentationMethod;
-    }
-
-    public void setPresentationMethod(String presentationMethod) {
-        this.presentationMethod = presentationMethod;
+    public void set3D(boolean is3D) {
+        this.is3D = is3D;
     }
 
     public String getShowUrl() {
@@ -255,21 +216,40 @@ public class MovieInfo implements Serializable {
         this.eventUrl = eventUrl;
     }
 
-    public List<String> getEventSmallImagePortraits() {
-        return eventSmallImagePortraits;
+    public String getEventSmallImagePortrait() {
+        return eventSmallImagePortrait;
     }
 
-    public void setEventSmallImagePortraits(List<String> eventSmallImagePortraits) {
-        this.eventSmallImagePortraits = eventSmallImagePortraits;
+    public void setEventSmallImagePortrait(String eventSmallImagePortrait) {
+        this.eventSmallImagePortrait = eventSmallImagePortrait;
     }
 
-    public List<String> getEventLargeImagePortraits() {
-        return eventLargeImagePortraits;
+    public String getEventLargeImagePortrait() {
+        return eventLargeImagePortrait;
     }
 
-    public void setEventLargeImagePortraits(List<String> eventLargeImagePortraits) {
-        this.eventLargeImagePortraits = eventLargeImagePortraits;
+    public void setEventLargeImagePortrait(String eventLargeImagePortrait) {
+        this.eventLargeImagePortrait = eventLargeImagePortrait;
     }
+    
+    
+    public String getEventSmallImageLandscape() {
+        return eventSmallImageLandscape;
+    }
+
+    public void setEventSmallImageLandscape(String eventSmallImageLandscape) {
+        this.eventSmallImageLandscape = eventSmallImageLandscape;
+    }
+
+    public String getEventLargeImageLandscape() {
+        return eventLargeImageLandscape;
+    }
+
+    public void setEventLargeImageLandscape(String eventLargeImageLandscape) {
+        this.eventLargeImageLandscape = eventLargeImageLandscape;
+    }
+    
+    
 
     public Date getStartingDate() {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss"); // like
@@ -291,21 +271,20 @@ public class MovieInfo implements Serializable {
         copy.productionYear = productionYear;
         copy.lenghtInMinutes = lenghtInMinutes;
         copy.dtLocalRelease = dtLocalRelease;
-        copy.raiting = raiting;
         copy.ratingLabel = ratingLabel;
-        copy.ratingImageUrl = ratingImageUrl;
         copy.genres = genres;
         copy.theathreId = theathreId;
-        copy.theatreAuditriumID = theatreAuditriumID;
         copy.theatre = theatre;
         copy.theatreAuditorium = theatreAuditorium;
-        copy.theatreAndAuditorium = theatreAndAuditorium;
-        copy.presentationMethodAndLanguage = presentationMethodAndLanguage;
-        copy.presentationMethod = presentationMethod;
+        copy.language = language;
+        copy.is3D = is3D;
         copy.showUrl = showUrl;
         copy.eventUrl = eventUrl;
-        copy.eventSmallImagePortraits = eventSmallImagePortraits;
-        copy.eventLargeImagePortraits = eventLargeImagePortraits;
+        copy.eventSmallImagePortrait = eventSmallImagePortrait;
+        copy.eventLargeImagePortrait = eventLargeImagePortrait;
+
+        copy.eventSmallImageLandscape = eventSmallImageLandscape;
+        copy.eventLargeImageLandscape = eventLargeImageLandscape;
         return copy;
     }
 
