@@ -30,18 +30,49 @@ import java.net.URL;
 public abstract class BaseFinnkinoParser implements MovieParser {
 
     // XML Tags
-    protected static final String SCHEDULE = "Schedule";
+    public static final String SCHEDULE = "Schedule";
 
-    protected static final String SHOWS = "Shows";
+    public static final String SHOWS = "Shows";
 
-    protected static final String SHOW = "Show";
+    public static final String SHOW = "Show";
 
-    protected static final String DTTM_SHOW_START = "dttmShowStart";
+    public static final String DTTM_SHOW_START = "dttmShowStart";
 
-    protected static final String TITLE = "Title";
+    public static final String DTTM_SHOW_END = "dttmShowEnd";
 
-    protected static final String THEATRE_AND_AUDITORIUM = "TheatreAndAuditorium";
+    public static final String TITLE = "Title";
 
+    public static final String ORIGINAL_TITLE = "OriginalTitle";
+
+    public static final String THEATRE = "Theatre";
+
+    public static final String THEATRE_AUDITORIUM = "TheatreAuditorium";
+
+    public static final String THEATRE_AND_AUDITORIUM = "TheatreAndAuditorium";
+
+    public static final String PRODUCTION_YEAR = "ProductionYear";
+    
+    public static final String LENGTH_IN_MINUTES = "LengthInMinutes";
+    
+    public static final String DATE_LOCAL_RELEASE = "dtLocalRelease";
+    
+    public static final String RATING_LABEL = "RatingLabel";
+    
+    public static final String GENRES = "Genres";
+    
+    public static final String PRESENTATION_METHOD_AND_LANGAUGE = "PresentationMethodAndLanguage";
+    
+    public static final String IMAGES = "Images";
+    
+    public static final String EVENT_SMALL_IMAGE_PORTRAIT = "EventSmallImagePortrait";
+    
+    public static final String EVENT_LARGE_IMAGE_PORTRAIT = "EventLargeImagePortrait";
+    
+    public static final String EVENT_SMALL_IMAGE_LANDSCAPE = "EventSmallImageLandscape";
+    
+    public static final String EVENT_LARGE_IMAGE_LANDSCAPE = "EventLargeImageLandscape";
+
+    
     protected final URL finnikoUrl;
 
     public BaseFinnkinoParser() throws MalformedURLException {

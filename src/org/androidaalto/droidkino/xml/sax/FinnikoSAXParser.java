@@ -47,7 +47,7 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
         RootElement root = new RootElement(SCHEDULE);
         Element shows = root.getChild(SHOWS);
         Element show = shows.getChild(SHOW);
-
+        Element images = show.getChild(IMAGES);
         show.setEndElementListener(new EndElementListener() {
 
             @Override
@@ -72,7 +72,25 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
             }
         });
 
-        show.getChild(THEATRE_AND_AUDITORIUM).setEndTextElementListener(
+        show.getChild(THEATRE_AUDITORIUM).setEndTextElementListener(
+                new EndTextElementListener() {
+
+                    @Override
+                    public void end(String body) {
+                        movieInfo.setTheatreAuditorium(body);
+                    }
+                });
+        
+        show.getChild(ORIGINAL_TITLE).setEndTextElementListener(
+                new EndTextElementListener() {
+
+                    @Override
+                    public void end(String body) {
+                        movieInfo.setOriginalTitle(body);
+                    }
+                });
+        
+       show.getChild(THEATRE).setEndTextElementListener(
                 new EndTextElementListener() {
 
                     @Override
@@ -81,6 +99,107 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
                     }
                 });
 
+       show.getChild(PRODUCTION_YEAR).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setProductionYear(body);
+                   }
+               });
+        
+       show.getChild(LENGTH_IN_MINUTES).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setLenghtInMinutes(body);
+                   }
+               });
+       
+       show.getChild(DATE_LOCAL_RELEASE).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setDtLocalRelease(body);
+                   }
+               });
+       
+       show.getChild(RATING_LABEL).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setRatingLabel(body);
+                   }
+               });
+       
+       show.getChild(GENRES).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setGenres(body);
+                   }
+               });
+        
+       show.getChild(PRESENTATION_METHOD_AND_LANGAUGE).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       if (body.startsWith("3D")) {
+                           movieInfo.set3D(true);
+                           if (body.substring(2).length() > 0) {
+                               movieInfo.setLanguage(body.substring(3));
+                           }
+                       }
+                       else 
+                       {
+                           movieInfo.set3D(false);
+                           movieInfo.setLanguage(body);
+                       }
+                   }
+               });
+        
+       images.getChild(EVENT_SMALL_IMAGE_PORTRAIT).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setEventSmallImagePortrait(body);
+                   }
+               });
+       
+       images.getChild(EVENT_LARGE_IMAGE_PORTRAIT).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setEventLargeImagePortrait(body);
+                   }
+               });
+       
+       
+       images.getChild(EVENT_SMALL_IMAGE_LANDSCAPE).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setEventSmallImageLandscape(body);
+                   }
+               });
+       
+       images.getChild(EVENT_LARGE_IMAGE_LANDSCAPE).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setEventLargeImageLandscape(body);
+                   }
+               });
+       
         try {
             Xml.parse(this.getInputStream(), Xml.Encoding.UTF_8, root.getContentHandler());
         } catch (Exception e) {
