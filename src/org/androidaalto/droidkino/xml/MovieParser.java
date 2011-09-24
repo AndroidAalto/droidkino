@@ -18,7 +18,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 package org.androidaalto.droidkino.xml;
 
 import java.util.List;
-import java.util.Map;
 
 import org.androidaalto.droidkino.*;
 

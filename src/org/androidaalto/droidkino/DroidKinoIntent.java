@@ -22,6 +22,10 @@ public class DroidKinoIntent {
     public static String THEATRE_AREAS_EXTRA = "areas";
 
     
+    /***
+     * Extra key name for the schedules that the {@link DataFetchService} returns
+     */
+    public static String SCHEDULE_LIST_EXTRA = "schedules";
     
     /***
      * Intent fired by {@link DataFetchService} when there is an error during

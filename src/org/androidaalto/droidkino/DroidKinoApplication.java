@@ -22,6 +22,8 @@ public class DroidKinoApplication extends Application {
 
     private List<TheatreArea> theatres = new ArrayList<TheatreArea>();
     
+    private List<MovieSchedule> schedules = new ArrayList<MovieSchedule>();
+    
     /***
      * Save the list of the movies
      * 
@@ -73,4 +75,11 @@ public class DroidKinoApplication extends Application {
        return this.theatres;
     }
 
+    public void setSchedules(List<MovieSchedule> schedules) {
+        this.schedules = schedules;
+    }
+
+    public List<MovieSchedule> getSchedules() {
+        return this.schedules;
+    }
 }

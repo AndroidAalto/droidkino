@@ -32,6 +32,10 @@
 		</activity>
 		<activity android:name="MovieList">
 		</activity>
+		<activity android:name="ScheduleList">
+		</activity>
+		<activity android:name="SearchSchedule">
+		</activity>
 		<service android:name=".service.DataFetchService"></service>
 
 	</application>
