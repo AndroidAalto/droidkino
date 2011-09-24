@@ -20,14 +20,11 @@ package org.androidaalto.droidkino.xml;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.androidaalto.droidkino.MovieInfo;
 import org.androidaalto.droidkino.MovieSchedule;
 import org.androidaalto.droidkino.TheatreArea;
-import org.w3c.dom.NodeList;
 
 import android.sax.Element;
 import android.sax.EndElementListener;
@@ -360,24 +357,18 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
         try {
             StringBuffer urlStringBuffer = new StringBuffer(BASE_FINN_FINO_URL);
             urlStringBuffer.append(SCHEDULE);
-            if (areaId != null || date != null || eventId != null) {
+            if (areaId != null || date != null) {
                 urlStringBuffer.append("?");
                 
-                if (areaId != null) {
-                    urlStringBuffer.append(PARAM_AREA);
-                    urlStringBuffer.append("=");
-                    urlStringBuffer.append(areaId);                                
-                }
-                if (date != null) {
-                    urlStringBuffer.append(PARAM_DATE);
-                    urlStringBuffer.append("=");
-                    urlStringBuffer.append(date);                                
-                }
-                if (eventId != null) {
-                    urlStringBuffer.append(PARAM_EVENT_ID);
-                    urlStringBuffer.append("=");
-                    urlStringBuffer.append(eventId);                                
-                }
+                urlStringBuffer.append(PARAM_AREA);
+                urlStringBuffer.append("=");
+                urlStringBuffer.append(areaId);                                
+            
+                urlStringBuffer.append("&");
+                
+                urlStringBuffer.append(PARAM_DATE);
+                urlStringBuffer.append("=");
+                urlStringBuffer.append(date);                                
             }
             URL url = new URL(urlStringBuffer.toString());
             Xml.parse(this.getInputStream(url), Xml.Encoding.UTF_8, root.getContentHandler());

@@ -24,17 +24,19 @@ package org.androidaalto.droidkino.service;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import org.androidaalto.droidkino.DroidKinoIntent;
 import org.androidaalto.droidkino.MovieInfo;
+import org.androidaalto.droidkino.MovieSchedule;
 import org.androidaalto.droidkino.TheatreArea;
+import org.androidaalto.droidkino.xml.BaseFinnkinoParser;
 import org.androidaalto.droidkino.xml.ParserFactory;
 
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -55,6 +57,9 @@ public class DataFetchService extends Service {
     private static final String LOG_TAG = DataFetchService.class.getCanonicalName();
 
     public static final String SERVICE_WORKING = "fetch_service_working";
+    
+    public static final String DATA_TO_FETCH = "data_to_fetch";
+    
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -69,13 +74,18 @@ public class DataFetchService extends Service {
 
         final SharedPreferences prefs = getSharedPreferences(SERVICE_WORKING, MODE_PRIVATE);
 
+        final Bundle extras =  intent.getExtras();
+        
         Runnable r = new Runnable() {
 
             @Override
             public void run() {
+                
                 List<MovieInfo> showList = null;
 
                 List<TheatreArea> theatreAreas = null;
+                
+                List<MovieSchedule> scheduleList = null;
                 
                 Editor edit = prefs.edit();
 
@@ -83,20 +93,38 @@ public class DataFetchService extends Service {
                     edit.putBoolean(SERVICE_WORKING, true);
                     edit.commit();
 
-                    showList = ParserFactory.getParser().parseMovies(null);
-
-                    theatreAreas = ParserFactory.getParser().parseAreas();
+                    String dataToFetch = extras.getString(DATA_TO_FETCH);
                     
+                    if (DroidKinoIntent.MOVIE_LIST_EXTRA.equals(dataToFetch)) {
+                        String areaId = extras.getString(BaseFinnkinoParser.PARAM_AREA);
+                        showList = ParserFactory.getParser().parseMovies(areaId);
+                    }
+                    if (DroidKinoIntent.THEATRE_AREAS_EXTRA.equals(dataToFetch)) {
+                        theatreAreas = ParserFactory.getParser().parseAreas();
+                    }
+                    if (DroidKinoIntent.SCHEDULE_LIST_EXTRA.equals(dataToFetch)) {
+                        String areaId = extras.getString(BaseFinnkinoParser.PARAM_AREA);
+                        String date = extras.getString(BaseFinnkinoParser.PARAM_DATE);
+                        String eventId = extras.getString(BaseFinnkinoParser.PARAM_EVENT_ID);
+                        scheduleList = ParserFactory.getParser().parseSchedules(areaId, date, eventId);
+                    }
                     edit.putBoolean(SERVICE_WORKING, false);
                     edit.commit();
 
                     Intent completeIntent = DroidKinoIntent.FETCH_COMPLETE;
-                    completeIntent.putExtra(DroidKinoIntent.MOVIE_LIST_EXTRA,
-                            (Serializable) showList);
-                    
-                    completeIntent.putExtra(DroidKinoIntent.THEATRE_AREAS_EXTRA,
-                            (Serializable) theatreAreas);
 
+                    if (DroidKinoIntent.MOVIE_LIST_EXTRA.equals(dataToFetch)) {
+                        completeIntent.putExtra(DroidKinoIntent.MOVIE_LIST_EXTRA,
+                            (Serializable) showList);
+                    }
+                    if (DroidKinoIntent.THEATRE_AREAS_EXTRA.equals(dataToFetch)) {
+                        completeIntent.putExtra(DroidKinoIntent.THEATRE_AREAS_EXTRA,
+                            (Serializable) theatreAreas);
+                    }
+                    if (DroidKinoIntent.SCHEDULE_LIST_EXTRA.equals(dataToFetch)) {
+                        completeIntent.putExtra(DroidKinoIntent.SCHEDULE_LIST_EXTRA,
+                            (Serializable) scheduleList);
+                    }
                     
                     sendBroadcast(completeIntent);
 

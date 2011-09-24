@@ -90,7 +90,7 @@ public class MovieSchedule  implements Serializable {
 
     
     public Date getStartingDate() {
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss"); // like
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"); // like
         // 2011-05-14T11:00:00
         try {
             return formatter.parse(dttmShowStart);
