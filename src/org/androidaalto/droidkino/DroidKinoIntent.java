@@ -15,6 +15,14 @@ public class DroidKinoIntent {
      */
     public static String MOVIE_LIST_EXTRA = "movies";
 
+    
+    /***
+     * Extra key name for the theatre areas that the {@link DataFetchService} returns
+     */
+    public static String THEATRE_AREAS_EXTRA = "areas";
+
+    
+    
     /***
      * Intent fired by {@link DataFetchService} when there is an error during
      * movies fetching
@@ -27,5 +35,6 @@ public class DroidKinoIntent {
      * {@link DroidKinoIntent.MOVIE_LIST_EXTRA} key.
      */
     public static final Intent FETCH_COMPLETE = new Intent("fetch_complete");
+
 
 }

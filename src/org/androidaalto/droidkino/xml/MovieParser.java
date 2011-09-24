@@ -18,6 +18,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 package org.androidaalto.droidkino.xml;
 
 import java.util.List;
+import java.util.Map;
 
 import org.androidaalto.droidkino.*;
 
@@ -28,6 +29,23 @@ import org.androidaalto.droidkino.*;
  */
 public interface MovieParser {
 
-    public List<MovieInfo> parse();
+    /** Will parse at list of movie info from the event xml in finnkino
+     * @param areaId the Id of the movie theatre area or null for all areas
+     * @return a list of movie info for the specified area (if specified) in the order that they are parsed.
+     */
+    public List<MovieInfo> parseMovies(String areaId);
+    
+    /** Will parse the area xml in finnkino
+     * @return a list of TheatreArea in the order that they are parsed
+     */
+    public List<TheatreArea> parseAreas(); 
+
+    /** Will parse list of schedules from the schedule xml in finnkino
+     * @param areaId (optional) the ID of a particular movie theatre area or null for all areas
+     * @param date (optional) the date to look for schedules in the format dd.mm.yyyy, by default today.
+     * @param eventId (optional) the ID of a particular movie or null for all movies
+     * @return a list of MovieSchedules in the order that they are parsed, if specified it filters by areaId and eventId
+     */
+    public List<MovieSchedule> parseSchedules(String areaId, String date, String eventId); 
 
 }

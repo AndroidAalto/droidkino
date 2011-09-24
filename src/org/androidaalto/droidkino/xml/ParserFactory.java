@@ -19,7 +19,6 @@ package org.androidaalto.droidkino.xml;
 
 import java.net.MalformedURLException;
 
-import org.androidaalto.droidkino.xml.sax.FinnikoSAXParser;
 
 /***
  * This class manage the creation of the parser objects

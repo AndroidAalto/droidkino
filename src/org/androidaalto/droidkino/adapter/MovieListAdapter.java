@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.androidaalto.droidkino.MovieInfo;
+import org.androidaalto.droidkino.MovieSchedule;
 
 
 import android.content.Context;
@@ -28,7 +28,7 @@ import org.androidaalto.droidkino.R;
  * 
  * @author rciovati
  */
-public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
+public class MovieListAdapter extends ArrayAdapter<MovieSchedule> {
  
     private LayoutInflater mInflater;
 
@@ -38,7 +38,7 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
     
     private int mResId;
 
-    public MovieListAdapter(Context context, List<MovieInfo> movies) {
+    public MovieListAdapter(Context context, List<MovieSchedule> movies) {
         super(context, R.layout.movie_list_item, movies);
         mInflater = LayoutInflater.from(context);
         mResId = R.layout.movie_list_item; 
@@ -48,7 +48,7 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        MovieInfo movie = getItem(position);
+        MovieSchedule movieSchedule = getItem(position);
 
         ViewCache viewCache;
 
@@ -67,15 +67,15 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
             viewCache = (ViewCache) convertView.getTag();
         }
 
-        viewCache.title.setText(movie.getTitle());
-        viewCache.theatre.setText(movie.getTheatre());
-        viewCache.lenghtInMinutes.setText(movie.getLenghtInMinutes() + "m");
-        viewCache.dttmShowStart.setText(movie.getDttmShowStart().substring(11, 16));
+        viewCache.title.setText(movieSchedule.getTitle());
+        viewCache.lenghtInMinutes.setText(String.valueOf(movieSchedule.getLengthInMinutes()) + "m");
+        viewCache.dttmShowStart.setText(movieSchedule.getDttmShowStart().substring(11, 16));
+        viewCache.theatre.setText(movieSchedule.getTheatre() + "-" + movieSchedule.getTheatreAuditorium());
         try {
 
             // Since movie entries are repeated (same movie title for several times and theatres, we save the drawable in cache)
             Drawable movieDrawable = null;
-            String movieUrl = movie.getEventSmallImagePortrait();
+            String movieUrl = movieSchedule.getEventSmallImagePortrait();
             if (movieDrawables.containsKey(movieUrl)) {
                 movieDrawable = movieDrawables.get(movieUrl);
             } else {
@@ -98,9 +98,9 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
      */
     public void sortByTitle() {
 
-        this.sort(new Comparator<MovieInfo>() {
+        this.sort(new Comparator<MovieSchedule>() {
             @Override
-            public int compare(MovieInfo object1, MovieInfo object2) {
+            public int compare(MovieSchedule object1, MovieSchedule object2) {
                 String title1 = object1.getTitle();
                 String title2 = object2.getTitle();
                 return title1.compareTo(title2);
@@ -111,13 +111,13 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
 
     /***
      * Sort the adapter content by movie start time
-     */
+     */ 
     public void sortByStartTime() {
 
-        this.sort(new Comparator<MovieInfo>() {
+        this.sort(new Comparator<MovieSchedule>() {
 
             @Override
-            public int compare(MovieInfo object1, MovieInfo object2) {
+            public int compare(MovieSchedule object1, MovieSchedule object2) {
                 Date date1 = object1.getStartingDate();
                 Date date2 = object2.getStartingDate();
                 return date1.compareTo(date2);
