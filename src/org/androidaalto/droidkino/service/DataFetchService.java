@@ -24,9 +24,11 @@ package org.androidaalto.droidkino.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.androidaalto.droidkino.DroidKinoIntent;
 import org.androidaalto.droidkino.MovieInfo;
+import org.androidaalto.droidkino.TheatreArea;
 import org.androidaalto.droidkino.xml.ParserFactory;
 
 import android.app.Service;
@@ -73,20 +75,29 @@ public class DataFetchService extends Service {
             public void run() {
                 List<MovieInfo> showList = null;
 
+                List<TheatreArea> theatreAreas = null;
+                
                 Editor edit = prefs.edit();
 
                 try {
                     edit.putBoolean(SERVICE_WORKING, true);
                     edit.commit();
 
-                    showList = ParserFactory.getParser().parse();
+                    showList = ParserFactory.getParser().parseMovies(null);
 
+                    theatreAreas = ParserFactory.getParser().parseAreas();
+                    
                     edit.putBoolean(SERVICE_WORKING, false);
                     edit.commit();
 
                     Intent completeIntent = DroidKinoIntent.FETCH_COMPLETE;
                     completeIntent.putExtra(DroidKinoIntent.MOVIE_LIST_EXTRA,
                             (Serializable) showList);
+                    
+                    completeIntent.putExtra(DroidKinoIntent.THEATRE_AREAS_EXTRA,
+                            (Serializable) theatreAreas);
+
+                    
                     sendBroadcast(completeIntent);
 
                     Log.d(LOG_TAG, "Sent fetch complete broadcast... stopping the service");
