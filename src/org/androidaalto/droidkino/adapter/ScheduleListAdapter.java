@@ -3,12 +3,13 @@ package org.androidaalto.droidkino.adapter;
 
 import java.net.URL;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.androidaalto.droidkino.MovieInfo;
-import org.androidaalto.droidkino.R;
+import org.androidaalto.droidkino.MovieSchedule;
+
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import org.androidaalto.droidkino.R;
 
 
 /***
@@ -26,7 +28,7 @@ import android.widget.TextView;
  * 
  * @author rciovati
  */
-public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
+public class ScheduleListAdapter extends ArrayAdapter<MovieSchedule> {
  
     private LayoutInflater mInflater;
 
@@ -36,17 +38,17 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
     
     private int mResId;
 
-    public MovieListAdapter(Context context, List<MovieInfo> movies) {
-        super(context, R.layout.schedule_list_item, movies);
+    public ScheduleListAdapter(Context context, List<MovieSchedule> schedule) {
+        super(context, R.layout.movie_list_item, schedule);
         mInflater = LayoutInflater.from(context);
-        mResId = R.layout.schedule_list_item; 
+        mResId = R.layout.movie_list_item; 
         movieDrawables = new HashMap<String, Drawable>();
     }
   
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        MovieInfo movieInfo = getItem(position);
+        MovieSchedule movieSchedule = getItem(position);
 
         ViewCache viewCache;
 
@@ -54,9 +56,9 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
             convertView = (View) mInflater.inflate(mResId, null);
             viewCache = new ViewCache();
             viewCache.title = (TextView) convertView.findViewById(R.id.titleTextView);
-            viewCache.genres = (TextView) convertView.findViewById(R.id.genresTextView);
-            viewCache.productionYear = (TextView) convertView.findViewById(R.id.productionYearTextView);
-            viewCache.ratingLabel = (TextView) convertView.findViewById(R.id.ratingLabelTextView);
+            viewCache.theatre = (TextView) convertView.findViewById(R.id.theatreTextView);
+            viewCache.lenghtInMinutes = (TextView) convertView.findViewById(R.id.lengthInMinutesTextView);
+            viewCache.dttmShowStart = (TextView) convertView.findViewById(R.id.dttmShowStartTextView);
             viewCache.smallImagePortrait = (ImageView) convertView.findViewById(R.id.smallImagePortrait);
             
             convertView.setTag(viewCache);
@@ -65,15 +67,15 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
             viewCache = (ViewCache) convertView.getTag();
         }
 
-        viewCache.title.setText(movieInfo.getTitle());
-        viewCache.genres.setText(movieInfo.getGenres());
-        viewCache.productionYear.setText(movieInfo.getProductionYear());
-        viewCache.ratingLabel.setText(movieInfo.getRatingLabel());
+        viewCache.title.setText(movieSchedule.getTitle());
+        viewCache.lenghtInMinutes.setText(String.valueOf(movieSchedule.getLengthInMinutes()) + "m");
+        viewCache.dttmShowStart.setText(movieSchedule.getDttmShowStart().substring(11, 16));
+        viewCache.theatre.setText(movieSchedule.getTheatre() + "-" + movieSchedule.getTheatreAuditorium());
         try {
 
             // Since movie entries are repeated (same movie title for several times and theatres, we save the drawable in cache)
             Drawable movieDrawable = null;
-            String imageUrl = movieInfo.getEventSmallImagePortrait();
+            String imageUrl = movieSchedule.getEventSmallImagePortrait();
             if (movieDrawables.containsKey(imageUrl)) {
                 movieDrawable = movieDrawables.get(imageUrl);
             } else {
@@ -92,22 +94,21 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
     }
 
     /***
-     * Sort the adapter content by movie name
-     */
-    public void sortByTitle() {
+     * Sort the adapter content by movie start time
+     */ 
+    public void sortByStartTime() {
 
-        this.sort(new Comparator<MovieInfo>() {
+        this.sort(new Comparator<MovieSchedule>() {
+
             @Override
-            public int compare(MovieInfo object1, MovieInfo object2) {
-                String title1 = object1.getTitle();
-                String title2 = object2.getTitle();
-                return title1.compareTo(title2);
+            public int compare(MovieSchedule object1, MovieSchedule object2) {
+                Date date1 = object1.getStartingDate();
+                Date date2 = object2.getStartingDate();
+                return date1.compareTo(date2);
             }
         });
-
     }
 
-   
     /***
      * Private class for hold already inflated views and avoid to inflate them
      * again.
@@ -117,11 +118,11 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
     static class ViewCache {
         TextView title;
 
-        TextView genres;
+        TextView theatre;
         
-        TextView productionYear;
+        TextView lenghtInMinutes;
         
-        TextView ratingLabel;
+        TextView dttmShowStart;
 
         ImageView smallImagePortrait;
         
