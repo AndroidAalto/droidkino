@@ -29,26 +29,50 @@ import java.net.URL;
  */
 public abstract class BaseFinnkinoParser implements MovieParser {
 
-    // XML Tags
+    
+    // Areas XML Tags
+    public static final String THEATRE_AREAS = "TheatreAreas";
+
+    public static final String THEATRE_AREA = "TheatreArea";
+
+    public static final String ID = "ID";
+
+    public static final String NAME = "Name";
+    
+
+    //Schedule XML Tags
     public static final String SCHEDULE = "Schedule";
 
     public static final String SHOWS = "Shows";
 
     public static final String SHOW = "Show";
+    
+    public static final String EVENT_ID = "EventID";
 
     public static final String DTTM_SHOW_START = "dttmShowStart";
 
+    //This is not really part of the xml
+    //it is used to search by time
     public static final String DTTM_SHOW_END = "dttmShowEnd";
-
-    public static final String TITLE = "Title";
-
-    public static final String ORIGINAL_TITLE = "OriginalTitle";
+    
+    
+    public static final String THEATRE_ID = "TheatreID";
 
     public static final String THEATRE = "Theatre";
 
     public static final String THEATRE_AUDITORIUM = "TheatreAuditorium";
 
-    public static final String THEATRE_AND_AUDITORIUM = "TheatreAndAuditorium";
+    public static final String PRESENTATION_METHOD_AND_LANGAUGE = "PresentationMethodAndLanguage";
+    
+    
+    // Events XML Tags
+    public static final String EVENTS = "Events";
+    
+    public static final String EVENT = "Event";
+
+    public static final String TITLE = "Title";
+
+    public static final String ORIGINAL_TITLE = "OriginalTitle";
 
     public static final String PRODUCTION_YEAR = "ProductionYear";
     
@@ -57,11 +81,15 @@ public abstract class BaseFinnkinoParser implements MovieParser {
     public static final String DATE_LOCAL_RELEASE = "dtLocalRelease";
     
     public static final String RATING_LABEL = "RatingLabel";
+
+    public static final String LOGAL_DISTRIBUTOR_NAME = "LocalDistributorName";
+    
+    public static final String GLOBAL_DISTRIBUTOR_NAME = "GlobalDistributorName";
     
     public static final String GENRES = "Genres";
-    
-    public static final String PRESENTATION_METHOD_AND_LANGAUGE = "PresentationMethodAndLanguage";
-    
+
+    public static final String SYNOPSIS = "Synopsis";
+
     public static final String IMAGES = "Images";
     
     public static final String EVENT_SMALL_IMAGE_PORTRAIT = "EventSmallImagePortrait";
@@ -72,21 +100,37 @@ public abstract class BaseFinnkinoParser implements MovieParser {
     
     public static final String EVENT_LARGE_IMAGE_LANDSCAPE = "EventLargeImageLandscape";
 
+    public static final String VIDEOS = "Videos";
     
-    protected final URL finnikoUrl;
+    public static final String EVENT_VIDEO = "EventVideo";
 
-    public BaseFinnkinoParser() throws MalformedURLException {
-        this.finnikoUrl = new URL("http://www.finnkino.fi/xml/Schedule/");
-    }
+    public static final String LOCATION = "Location";
+    
+    public static final String THUMBNAIL_LOCATION = "ThumbnailLocation";
+    
+    public static final String MEDIA_RESOURCE_FORMAT = "MediaResourceFormat";
+    
+
+
+    // URLs
+    
+    public static final String BASE_FINN_FINO_URL = "http://www.finnkino.fi/xml/";
+    
+    public static final String PARAM_AREA = "area";
+    
+    public static final String PARAM_EVENT_ID = "eventID";
+    
+    public static final String PARAM_DATE = "dt";
+
 
     /***
      * get an InputStream object to XMl of Finniko.fi website
      * 
      * @return
      */
-    protected InputStream getInputStream() {
+    protected InputStream getInputStream(URL url) {
         try {
-            return finnikoUrl.openConnection().getInputStream();
+            return url.openConnection().getInputStream();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

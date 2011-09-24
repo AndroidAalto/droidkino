@@ -23,22 +23,12 @@
 package org.androidaalto.droidkino;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class MovieInfo implements Serializable {
 
     private static final long serialVersionUID = -6630023918429921176L;
 
-    private long id;
-
-    private String dttmShowStart;
-
-    private long eventId;
+    private String eventId;
 
     private String title;
 
@@ -51,23 +41,12 @@ public class MovieInfo implements Serializable {
     private String dtLocalRelease;
 
     private String ratingLabel;
-
+    
+    private String localDistributorName;
+    
+    private String globalDistributorName;
+    
     private String genres;
-
-    private int theathreId;
-
-    private String theatre;
-
-    private String theatreAuditorium;
-
-    private boolean is3D;
-
-    private String language;
-
-    // private List<String> eventSeries;
-    private String showUrl;
-
-    private String eventUrl;
 
     private String eventSmallImagePortrait;
 
@@ -77,30 +56,12 @@ public class MovieInfo implements Serializable {
 
     private String eventLargeImageLandscape;
 
-    
-  
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getDttmShowStart() {
-        return dttmShowStart;
-    }
-
-    public void setDttmShowStart(String dttmShowStart) {
-        this.dttmShowStart = dttmShowStart;
-    }
-
-    public long getEventId() {
+    public String getEventId() {
         return eventId;
     }
 
-    public void setEventId(long eventId) {
+    public void setEventId(String eventId) {
         this.eventId = eventId;
     }
 
@@ -152,68 +113,28 @@ public class MovieInfo implements Serializable {
         this.ratingLabel = ratingLabel;
     }
 
+    public String getLocalDistributorName() {
+        return localDistributorName;
+    }
+
+    public void setLocalDistributorName(String localDistributorName) {
+        this.localDistributorName = localDistributorName;
+    }
+
+    public String getGlobalDistributorName() {
+        return globalDistributorName;
+    }
+
+    public void setGlobalDistributorName(String globalDistributorName) {
+        this.globalDistributorName = globalDistributorName;
+    }
+
     public String getGenres() {
         return genres;
     }
 
     public void setGenres(String genres) {
         this.genres = genres;
-    }
-
-    public int getTheathreId() {
-        return theathreId;
-    }
-
-    public void setTheathreId(int theathreId) {
-        this.theathreId = theathreId;
-    }
-
-    public String getTheatre() {
-        return theatre;
-    }
-
-    public void setTheatre(String theatre) {
-        this.theatre = theatre;
-    }
-
-    public String getTheatreAuditorium() {
-        return theatreAuditorium;
-    }
-
-    public void setTheatreAuditorium(String theatreAuditorium) {
-        this.theatreAuditorium = theatreAuditorium;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public boolean is3D() {
-        return is3D;
-    }
-
-    public void set3D(boolean is3D) {
-        this.is3D = is3D;
-    }
-
-    public String getShowUrl() {
-        return showUrl;
-    }
-
-    public void setShowUrl(String showUrl) {
-        this.showUrl = showUrl;
-    }
-
-    public String getEventUrl() {
-        return eventUrl;
-    }
-
-    public void setEventUrl(String eventUrl) {
-        this.eventUrl = eventUrl;
     }
 
     public String getEventSmallImagePortrait() {
@@ -248,23 +169,10 @@ public class MovieInfo implements Serializable {
     public void setEventLargeImageLandscape(String eventLargeImageLandscape) {
         this.eventLargeImageLandscape = eventLargeImageLandscape;
     }
-    
-    
-
-    public Date getStartingDate() {
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss"); // like
-        // 2011-05-14T11:00:00
-        try {
-            return formatter.parse(dttmShowStart);
-        } catch (ParseException e) {
-            return null; // not so bad returning null
-        }
-    }
+   
 
     public MovieInfo copy() {
         MovieInfo copy = new MovieInfo();
-        copy.id = id;
-        copy.dttmShowStart = dttmShowStart;
         copy.eventId = eventId;
         copy.title = title;
         copy.originalTitle = originalTitle;
@@ -272,17 +180,11 @@ public class MovieInfo implements Serializable {
         copy.lenghtInMinutes = lenghtInMinutes;
         copy.dtLocalRelease = dtLocalRelease;
         copy.ratingLabel = ratingLabel;
-        copy.genres = genres;
-        copy.theathreId = theathreId;
-        copy.theatre = theatre;
-        copy.theatreAuditorium = theatreAuditorium;
-        copy.language = language;
-        copy.is3D = is3D;
-        copy.showUrl = showUrl;
-        copy.eventUrl = eventUrl;
+        copy.localDistributorName = localDistributorName;
+        copy.globalDistributorName = globalDistributorName;
+        copy.genres = genres;        
         copy.eventSmallImagePortrait = eventSmallImagePortrait;
         copy.eventLargeImagePortrait = eventLargeImagePortrait;
-
         copy.eventSmallImageLandscape = eventSmallImageLandscape;
         copy.eventLargeImageLandscape = eventLargeImageLandscape;
         return copy;

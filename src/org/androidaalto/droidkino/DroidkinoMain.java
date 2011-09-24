@@ -24,6 +24,7 @@ package org.androidaalto.droidkino;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.androidaalto.droidkino.service.DataFetchService;
 import org.androidaalto.droidkino.xml.BaseFinnkinoParser;
@@ -62,6 +63,8 @@ public class DroidkinoMain extends Activity {
 
     private List<MovieInfo> moviesList;
 
+    private List<TheatreArea> theatreAreaList;
+    
     private Button searchButon;
     
     private TextView startTimeTextView;
@@ -114,16 +117,22 @@ public class DroidkinoMain extends Activity {
             } else {
                 moviesList = (List<MovieInfo>) intent
                         .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
+                
+                theatreAreaList = (List<TheatreArea>) intent
+                .getSerializableExtra(DroidKinoIntent.THEATRE_AREAS_EXTRA);
+        
                 DroidKinoApplication app = (DroidKinoApplication) getApplication();
                 app.setMovies(moviesList);
+                app.setTheatres(theatreAreaList);
+                
                 // We use an Handler to make sure that the action is done in the
                 // UI thread
-                for (String movieTitle : app.getMovieTitles()) {
-                    titlesArrayAdapter.add(movieTitle);                    
+                for (MovieInfo movieInfo : app.getMovies()) {
+                    titlesArrayAdapter.add(movieInfo.getTitle());                    
                 }
                 
-                for (String theatre : app.getTheatres()) {
-                    theatreArrayAdapter.add(theatre);                    
+                for (TheatreArea theatreArea: app.getTheatres()) {
+                    theatreArrayAdapter.add(theatreArea.getName());                    
                 }
 
                 
@@ -270,12 +279,12 @@ public class DroidkinoMain extends Activity {
                 Intent i = new Intent(DroidkinoMain.this, MovieList.class);
                 Bundle extras = new Bundle();
                 if (searchByTitleCheckBox.isChecked()) {
-                    String title = titlesArrayAdapter.getItem(titleSpinner.getSelectedItemPosition());
-                    extras.putString(BaseFinnkinoParser.TITLE, title);
+                    MovieInfo movieInfo = moviesList.get(titleSpinner.getSelectedItemPosition());
+                    extras.putString(BaseFinnkinoParser.PARAM_EVENT_ID, movieInfo.getEventId());
                 }
                 if (searchByTheatreCheckBox.isChecked()) {
-                    String theatre = theatreArrayAdapter.getItem(theatreSpinner.getSelectedItemPosition());
-                    extras.putString(BaseFinnkinoParser.THEATRE, theatre);
+                    TheatreArea theatreArea = theatreAreaList.get(theatreSpinner.getSelectedItemPosition());
+                    extras.putString(BaseFinnkinoParser.PARAM_AREA, theatreArea.getId());
                 }
                 if (searchByTimeCheckBox.isChecked()) {
                     String startTime = (String) startTimeTextView.getText();

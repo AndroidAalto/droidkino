@@ -20,6 +20,8 @@ public class DroidKinoApplication extends Application {
 
     private List<MovieInfo> movies = new ArrayList<MovieInfo>();
 
+    private List<TheatreArea> theatres = new ArrayList<TheatreArea>();
+    
     /***
      * Save the list of the movies
      * 
@@ -51,17 +53,24 @@ public class DroidKinoApplication extends Application {
         return new ArrayList<String>(movieTitles);
     }
     
+    
+    
+    /***
+     * Sets the map of theatres <id, name>
+     * 
+     * @return
+     */
+    public void setTheatres(List<TheatreArea> theatres) {
+       this.theatres = theatres;
+    }
+    
     /***
      * Returns a list of unique theatres that are in the movie list of the app (this might be hardcoded since the list is quite small and not changing much)
      * 
      * @return
      */
-    public List<String> getTheatres() {
-        SortedSet<String> theathres = new TreeSet<String>();
-        for (MovieInfo movieInfo : movies) {
-            theathres.add(movieInfo.getTheatre());
-        }
-        return new ArrayList<String>(theathres);
+    public List<TheatreArea> getTheatres() {
+       return this.theatres;
     }
 
 }

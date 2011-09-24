@@ -28,7 +28,6 @@
 		android:layout_height="fill_parent">
 		<TableRow android:id="@+id/tablerow_place"
 			android:layout_width="wrap_content" android:layout_height="wrap_content">
-			<CheckBox android:id="@+id/searchByTheatre" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" ></CheckBox>
 			<TextView android:text="Place:" android:id="@+id/table_place"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:textSize="24sp"></TextView>
