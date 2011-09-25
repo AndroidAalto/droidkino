@@ -23,6 +23,8 @@
 package org.androidaalto.droidkino;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieInfo implements Serializable {
 
@@ -47,6 +49,8 @@ public class MovieInfo implements Serializable {
     private String globalDistributorName;
     
     private String genres;
+    
+    private String synopsis;
 
     private String eventSmallImagePortrait;
 
@@ -56,7 +60,13 @@ public class MovieInfo implements Serializable {
 
     private String eventLargeImageLandscape;
 
+    private List<MovieTrailer> movieTrailers;
 
+    public MovieInfo() {
+        this.movieTrailers = new ArrayList<MovieTrailer>();
+    }
+    
+    
     public String getEventId() {
         return eventId;
     }
@@ -137,6 +147,14 @@ public class MovieInfo implements Serializable {
         this.genres = genres;
     }
 
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+    
     public String getEventSmallImagePortrait() {
         return eventSmallImagePortrait;
     }
@@ -170,6 +188,9 @@ public class MovieInfo implements Serializable {
         this.eventLargeImageLandscape = eventLargeImageLandscape;
     }
    
+    public void addMovieTrailer(MovieTrailer movieTrailer) {
+        this.movieTrailers.add(movieTrailer);
+    }
 
     public MovieInfo copy() {
         MovieInfo copy = new MovieInfo();
@@ -183,10 +204,12 @@ public class MovieInfo implements Serializable {
         copy.localDistributorName = localDistributorName;
         copy.globalDistributorName = globalDistributorName;
         copy.genres = genres;        
+        copy.synopsis = synopsis;
         copy.eventSmallImagePortrait = eventSmallImagePortrait;
         copy.eventLargeImagePortrait = eventLargeImagePortrait;
         copy.eventSmallImageLandscape = eventSmallImageLandscape;
         copy.eventLargeImageLandscape = eventLargeImageLandscape;
+        copy.movieTrailers = new ArrayList<MovieTrailer>(movieTrailers);
         return copy;
     }
 

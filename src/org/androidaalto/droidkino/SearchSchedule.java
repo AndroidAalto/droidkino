@@ -80,23 +80,19 @@ public class SearchSchedule extends Activity {
                 Toast.makeText(SearchSchedule.this, "Fetch failed", Toast.LENGTH_SHORT).show();
             } else {
                 
-                DroidKinoApplication app = (DroidKinoApplication) getApplication();
+                DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
                 
                 // We use an Handler to make sure that the action is done in the
                 // UI thread
-                
-                
-                theatreAreaList = (List<TheatreArea>) intent
-                    .getSerializableExtra(DroidKinoIntent.THEATRE_AREAS_EXTRA);
-                    app.setTheatres(theatreAreaList);
-                    for (TheatreArea theatreArea: app.getTheatres()) {
-                        theatreArrayAdapter.add(theatreArea.getName());                    
-                    }
-                
-               
+                theatreAreaList = (List<TheatreArea>) intent.getSerializableExtra(DroidKinoIntent.THEATRE_AREAS_EXTRA);
+                cache.getTheatres().addAll(theatreAreaList);
+                for (TheatreArea theatreArea: cache.getTheatres()) {
+                    theatreArrayAdapter.add(theatreArea.getName());                    
+                };
             }
         }
     };
+    
 
     private ProgressDialog fetchingXmlProgress;
 
@@ -108,8 +104,12 @@ public class SearchSchedule extends Activity {
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
         registerReceiver(mBroadcastReceiver, filter);
 
-        DroidKinoApplication app = (DroidKinoApplication) getApplication();
-        if (app != null && app.getMovies().size() > 0) {
+        DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
+        if (cache.getTheatres().size() > 0) {
+            this.theatreAreaList = cache.getTheatres();
+            for (TheatreArea theatreArea: cache.getTheatres()) {
+                theatreArrayAdapter.add(theatreArea.getName());                    
+            };
             return;
         }
 

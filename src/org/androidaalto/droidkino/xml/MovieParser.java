@@ -24,7 +24,7 @@ import org.androidaalto.droidkino.*;
 /***
  * All the parser in Droidkino should implement this interface
  * 
- * @author rciovati
+ * @author rciovati, marcostong17
  */
 public interface MovieParser {
 

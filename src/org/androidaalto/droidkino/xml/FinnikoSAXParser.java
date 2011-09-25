@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.androidaalto.droidkino.MovieInfo;
 import org.androidaalto.droidkino.MovieSchedule;
+import org.androidaalto.droidkino.MovieTrailer;
 import org.androidaalto.droidkino.TheatreArea;
 
 import android.sax.Element;
@@ -44,16 +45,29 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
     @Override
     public List<MovieInfo> parseMovies(String areaId) {
         final MovieInfo movieInfo = new MovieInfo();
+        final MovieTrailer movieTrailer = new MovieTrailer();
         final List<MovieInfo> movies = new ArrayList<MovieInfo>();
 
         RootElement root = new RootElement(EVENTS);
         Element event = root.getChild(EVENT);
         Element images = event.getChild(IMAGES);
+        Element videos = event.getChild(VIDEOS);
+        Element eventVideo = videos.getChild(EVENT_VIDEO);
+        
+       
         event.setEndElementListener(new EndElementListener() {
 
             @Override
             public void end() {
                 movies.add(movieInfo.copy());
+            }
+        });
+        
+        eventVideo.setEndElementListener(new EndElementListener() {
+
+            @Override
+            public void end() {
+                movieInfo.addMovieTrailer(movieTrailer.copy());
             }
         });
 
@@ -144,6 +158,15 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
                        movieInfo.setGenres(body);
                    }
                });
+       
+       event.getChild(SYNOPSIS).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setSynopsis(body);
+                   }
+               });
         
        images.getChild(EVENT_SMALL_IMAGE_PORTRAIT).setEndTextElementListener(
                new EndTextElementListener() {
@@ -179,6 +202,49 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
                    @Override
                    public void end(String body) {
                        movieInfo.setEventLargeImageLandscape(body);
+                   }
+               });
+       
+       eventVideo.getChild(TITLE).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieInfo.setTitle(body);
+                   }
+               });
+       eventVideo.getChild(LOCATION).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieTrailer.setLocation(body);
+                   }
+               });
+       eventVideo.getChild(THUMBNAIL_LOCATION).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieTrailer.setThumbnailLocation(body);
+                   }
+               });
+       
+       eventVideo.getChild(MEDIA_RESOURCE_FORMAT).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieTrailer.setMediaResourceFormat(body);
+                   }
+               });
+       
+       eventVideo.getChild(MEDIA_RESOURCE_SUB_TYPE).setEndTextElementListener(
+               new EndTextElementListener() {
+
+                   @Override
+                   public void end(String body) {
+                       movieTrailer.setMediaResourceSubType(body);
                    }
                });
        

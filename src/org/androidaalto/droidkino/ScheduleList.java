@@ -27,6 +27,9 @@ public class ScheduleList extends ListActivity {
 
     private List<MovieSchedule> scheduleList;
     
+    private String areaId;
+    
+    private String date;
    
     @Override
     protected void onStart() {
@@ -36,8 +39,16 @@ public class ScheduleList extends ListActivity {
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
         registerReceiver(mBroadcastReceiver, filter);
 
-        DroidKinoApplication app = (DroidKinoApplication) getApplication();
-        if (app != null && app.getMovies().size() > 0) {
+        DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
+        
+        areaId = getIntent().getStringExtra(BaseFinnkinoParser.PARAM_AREA);
+        date = getIntent().getStringExtra(BaseFinnkinoParser.PARAM_DATE);
+        
+        
+        if (cache.getSchedules().containsKey(areaId + "-" + date)) {
+            
+            scheduleList = cache.getSchedules().get(areaId + "-" + date);
+            publishListAdapters();
             return;
         }
 
@@ -71,26 +82,28 @@ public class ScheduleList extends ListActivity {
                         .getSerializableExtra(DroidKinoIntent.SCHEDULE_LIST_EXTRA);
                 
                 
-                DroidKinoApplication app = (DroidKinoApplication) getApplication();
-                app.setSchedules(scheduleList);
+                //TODO: To save in cache the schedule list in a map that has as key the area-date used to retrieve the list
+                //DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
+                //cache.getSchedules(scheduleList);
                 
-                ScheduleListAdapter adapter = new ScheduleListAdapter(ScheduleList.this, scheduleList);
-
-                setListAdapter(adapter);
-
-                adapter.sortByStartTime();
-
+                DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
+                cache.getSchedules().put(areaId+"-"+date, scheduleList);
+                
+                publishListAdapters();
                
             }
         }
     };
     
+    private void publishListAdapters() {
+        ScheduleListAdapter adapter = new ScheduleListAdapter(ScheduleList.this, scheduleList);
+        setListAdapter(adapter);
+        adapter.sortByStartTime();
+    }
     
     private void startDataFetchService() {
         Intent serviceIntent = new Intent(ScheduleList.this, DataFetchService.class);
-        String areaId = getIntent().getStringExtra(BaseFinnkinoParser.PARAM_AREA);
-        String date = getIntent().getStringExtra(BaseFinnkinoParser.PARAM_DATE);
-
+        
         serviceIntent.putExtra(DataFetchService.DATA_TO_FETCH, DroidKinoIntent.SCHEDULE_LIST_EXTRA);
         serviceIntent.putExtra(BaseFinnkinoParser.PARAM_AREA, areaId);
         serviceIntent.putExtra(BaseFinnkinoParser.PARAM_DATE, date);
@@ -104,36 +117,6 @@ public class ScheduleList extends ListActivity {
         super.onStop();
     }
     
-    /*
-    private List<MovieSchedule> getMovieSchedules(Bundle movieSearchFilter) {
-        
-        String areaId = movieSearchFilter.getString(BaseFinnkinoParser.PARAM_AREA);
-        String date = movieSearchFilter.getString(BaseFinnkinoParser.PARAM_DATE);
-        String eventId = movieSearchFilter.getString(BaseFinnkinoParser.PARAM_EVENT_ID);
-        
-        List<MovieSchedule> movieSchedules = null;
-        
-        try {
-            movieSchedules = ParserFactory.getParser().parseSchedules(areaId, date, eventId);
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Error while fetching movie schedule data", e);
-            Toast.makeText(ScheduleList.this, "Fetching Movie Schedules failed", Toast.LENGTH_SHORT).show();
-            return new ArrayList<MovieSchedule>();
-        } 
-        List<MovieSchedule> filteredMovieSchedules = new ArrayList<MovieSchedule>();
-        
-        String startTime = movieSearchFilter.getString(BaseFinnkinoParser.DTTM_SHOW_START);
-        String endTime = movieSearchFilter.getString(BaseFinnkinoParser.DTTM_SHOW_END);
-        
-        for (MovieSchedule movieSchedule : movieSchedules) {
-            String movieStartTime = movieSchedule.getDttmShowStart().substring(11, 16);
-            if ( (startTime==null || endTime==null || (startTime.compareTo(movieStartTime) <=0  && endTime.compareTo(movieStartTime) >=0))
-               ) {
-                filteredMovieSchedules.add(movieSchedule);
-            }
-                
-        }
-        return filteredMovieSchedules;
-    }*/
+   
 
 }
