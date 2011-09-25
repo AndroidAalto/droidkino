@@ -37,7 +37,7 @@ public class ScheduleList extends ListActivity {
         registerReceiver(mBroadcastReceiver, filter);
 
         DroidKinoApplication app = (DroidKinoApplication) getApplication();
-        if (app != null && app.getMovies().size() > 0) {
+        if (app != null && app.getSchedules().size() > 0) {
             return;
         }
 

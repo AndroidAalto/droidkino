@@ -84,19 +84,18 @@ public class SearchSchedule extends Activity {
                 
                 // We use an Handler to make sure that the action is done in the
                 // UI thread
-                
-                
-                theatreAreaList = (List<TheatreArea>) intent
-                    .getSerializableExtra(DroidKinoIntent.THEATRE_AREAS_EXTRA);
-                    app.setTheatres(theatreAreaList);
-                    for (TheatreArea theatreArea: app.getTheatres()) {
-                        theatreArrayAdapter.add(theatreArea.getName());                    
-                    }
-                
-               
+                theatreAreaList = (List<TheatreArea>) intent.getSerializableExtra(DroidKinoIntent.THEATRE_AREAS_EXTRA);
+                app.setTheatres(theatreAreaList);
+                publishListAdapters(app);
             }
         }
     };
+    
+    public void publishListAdapters(DroidKinoApplication app) {
+        for (TheatreArea theatreArea: app.getTheatres()) {
+            theatreArrayAdapter.add(theatreArea.getName());                    
+        }
+    }
 
     private ProgressDialog fetchingXmlProgress;
 
@@ -109,7 +108,9 @@ public class SearchSchedule extends Activity {
         registerReceiver(mBroadcastReceiver, filter);
 
         DroidKinoApplication app = (DroidKinoApplication) getApplication();
-        if (app != null && app.getMovies().size() > 0) {
+        if (app != null && app.getTheatres().size() > 0) {
+            this.theatreAreaList = app.getTheatres();
+            publishListAdapters(app);
             return;
         }
 

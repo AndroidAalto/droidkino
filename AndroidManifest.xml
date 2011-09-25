@@ -30,12 +30,11 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name="MovieList">
-		</activity>
-		<activity android:name="ScheduleList">
-		</activity>
-		<activity android:name="SearchSchedule">
-		</activity>
+		<activity android:name="MovieList"/>
+		<activity android:name="MovieDetail"/>
+		<activity android:name="ScheduleList"/>
+		<activity android:name="SearchSchedule"/>
+		<activity android:name="VideoPlayer"/>
 		<service android:name=".service.DataFetchService"></service>
 
 	</application>

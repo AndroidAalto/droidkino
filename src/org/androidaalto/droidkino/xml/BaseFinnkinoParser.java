@@ -109,6 +109,8 @@ public abstract class BaseFinnkinoParser implements MovieParser {
     
     public static final String MEDIA_RESOURCE_FORMAT = "MediaResourceFormat";
     
+    public static final String MEDIA_RESOURCE_SUB_TYPE = "MediaResourceSubType";
+    
 
 
     // URLs

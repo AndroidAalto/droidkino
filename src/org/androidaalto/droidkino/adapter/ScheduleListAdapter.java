@@ -13,6 +13,7 @@ import org.androidaalto.droidkino.MovieSchedule;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,9 @@ import org.androidaalto.droidkino.R;
  */
 public class ScheduleListAdapter extends ArrayAdapter<MovieSchedule> {
  
+    private static final String LOG_TAG = ScheduleListAdapter.class.getCanonicalName();
+
+
     private LayoutInflater mInflater;
 
     // this is a cache of movie images, used because there are several movie entries for the same title
@@ -87,6 +91,7 @@ public class ScheduleListAdapter extends ArrayAdapter<MovieSchedule> {
             viewCache.smallImagePortrait.setImageDrawable(movieDrawable);
         }
         catch (Exception e) {
+            Log.d(LOG_TAG, e.getMessage());
             viewCache.smallImagePortrait.setImageResource(R.drawable.icon);
         }
 

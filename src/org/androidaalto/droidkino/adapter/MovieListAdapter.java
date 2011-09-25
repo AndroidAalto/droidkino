@@ -12,6 +12,7 @@ import org.androidaalto.droidkino.R;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import android.widget.TextView;
  */
 public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
  
+    private static final String LOG_TAG = MovieListAdapter.class.getCanonicalName();
+    
     private LayoutInflater mInflater;
 
     // this is a cache of movie images, used because there are several movie entries for the same title
@@ -85,6 +88,7 @@ public class MovieListAdapter extends ArrayAdapter<MovieInfo> {
             viewCache.smallImagePortrait.setImageDrawable(movieDrawable);
         }
         catch (Exception e) {
+            Log.d(LOG_TAG, e.getMessage());
             viewCache.smallImagePortrait.setImageResource(R.drawable.icon);
         }
 

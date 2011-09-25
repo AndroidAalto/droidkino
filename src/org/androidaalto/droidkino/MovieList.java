@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class MovieList extends ListActivity {
@@ -36,6 +38,8 @@ public class MovieList extends ListActivity {
 
         DroidKinoApplication app = (DroidKinoApplication) getApplication();
         if (app != null && app.getMovies().size() > 0) {
+            movieList = app.getMovies();
+            publishListAdapters();
             return;
         }
 
@@ -66,23 +70,20 @@ public class MovieList extends ListActivity {
             } else {
                 movieList = (List<MovieInfo>) intent
                         .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
-                
-                
                 DroidKinoApplication app = (DroidKinoApplication) getApplication();
                 app.setMovies(movieList);
-                
-                MovieListAdapter adapter = new MovieListAdapter(MovieList.this, movieList);
-
-                setListAdapter(adapter);
-
-                adapter.sortByTitle();
-
-               
+                publishListAdapters();
             }
         }
     };
     
-    
+    private void publishListAdapters() {
+        MovieListAdapter adapter = new MovieListAdapter(MovieList.this, movieList);
+
+        setListAdapter(adapter);
+
+        adapter.sortByTitle();
+    }
     private void startDataFetchService() {
         Intent serviceIntent = new Intent(MovieList.this, DataFetchService.class);
         serviceIntent.putExtra(DataFetchService.DATA_TO_FETCH, DroidKinoIntent.MOVIE_LIST_EXTRA);
@@ -94,4 +95,13 @@ public class MovieList extends ListActivity {
         unregisterReceiver(mBroadcastReceiver);
         super.onStop();
     }
+    
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Intent i = new Intent(MovieList.this, MovieDetail.class);
+        i.putExtra(MovieDetail.MOVIE_INFO_EXTRA, movieList.get(position));
+        startActivity(i);
+    }
+
 }
