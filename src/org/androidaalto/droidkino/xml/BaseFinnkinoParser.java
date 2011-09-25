@@ -24,7 +24,7 @@ import java.net.URL;
 /***
  * Base class for all the finniko.fi's parsers
  * 
- * @author rciovati
+ * @author rciovati, marcostong17
  */
 public abstract class BaseFinnkinoParser implements MovieParser {
 

@@ -1,18 +1,12 @@
 package org.androidaalto.droidkino;
 
-import java.net.URL;
-
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MovieDetail extends Activity {
 
-    private static final String LOG_TAG = MovieDetail.class.getCanonicalName();
-    
     public static final String MOVIE_INFO_EXTRA = "movie_info";
     
 
@@ -41,7 +35,7 @@ public class MovieDetail extends Activity {
         synopsysTextView.setText(movieInfo.getSynopsis());
         
         
-        fillUpImageView(largePortraitImageView, movieInfo.getEventLargeImagePortrait(), R.drawable.android_99_146);
+        ImageHelper.fillUpImageView(largePortraitImageView, movieInfo.getEventLargeImagePortrait(), R.drawable.android_99_146);
         
         
         
@@ -57,17 +51,5 @@ public class MovieDetail extends Activity {
     }
     
     
-    private void fillUpImageView(ImageView imageView, String url, int defaultIcon) {
-        
-        URL thumb_u;
-        try {
-            thumb_u = new URL(url);
-            Drawable largePortraitDrawable = Drawable.createFromStream(thumb_u.openStream(), "src");
-            imageView.setImageDrawable(largePortraitDrawable);
-        } catch (Exception e) {
-            Log.d(LOG_TAG, e.getMessage());
-            imageView.setImageResource(defaultIcon);
-        }
-    }
     
 }

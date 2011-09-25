@@ -36,8 +36,8 @@ public class ScheduleList extends ListActivity {
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
         registerReceiver(mBroadcastReceiver, filter);
 
-        DroidKinoApplication app = (DroidKinoApplication) getApplication();
-        if (app != null && app.getSchedules().size() > 0) {
+        DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
+        if (cache.getSchedules().size() > 0) {
             return;
         }
 
@@ -71,8 +71,9 @@ public class ScheduleList extends ListActivity {
                         .getSerializableExtra(DroidKinoIntent.SCHEDULE_LIST_EXTRA);
                 
                 
-                DroidKinoApplication app = (DroidKinoApplication) getApplication();
-                app.setSchedules(scheduleList);
+                //TODO: To save in cache the schedule list in a map that has as key the area-date used to retrieve the list
+                //DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
+                //cache.getSchedules(scheduleList);
                 
                 ScheduleListAdapter adapter = new ScheduleListAdapter(ScheduleList.this, scheduleList);
 
@@ -104,36 +105,6 @@ public class ScheduleList extends ListActivity {
         super.onStop();
     }
     
-    /*
-    private List<MovieSchedule> getMovieSchedules(Bundle movieSearchFilter) {
-        
-        String areaId = movieSearchFilter.getString(BaseFinnkinoParser.PARAM_AREA);
-        String date = movieSearchFilter.getString(BaseFinnkinoParser.PARAM_DATE);
-        String eventId = movieSearchFilter.getString(BaseFinnkinoParser.PARAM_EVENT_ID);
-        
-        List<MovieSchedule> movieSchedules = null;
-        
-        try {
-            movieSchedules = ParserFactory.getParser().parseSchedules(areaId, date, eventId);
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Error while fetching movie schedule data", e);
-            Toast.makeText(ScheduleList.this, "Fetching Movie Schedules failed", Toast.LENGTH_SHORT).show();
-            return new ArrayList<MovieSchedule>();
-        } 
-        List<MovieSchedule> filteredMovieSchedules = new ArrayList<MovieSchedule>();
-        
-        String startTime = movieSearchFilter.getString(BaseFinnkinoParser.DTTM_SHOW_START);
-        String endTime = movieSearchFilter.getString(BaseFinnkinoParser.DTTM_SHOW_END);
-        
-        for (MovieSchedule movieSchedule : movieSchedules) {
-            String movieStartTime = movieSchedule.getDttmShowStart().substring(11, 16);
-            if ( (startTime==null || endTime==null || (startTime.compareTo(movieStartTime) <=0  && endTime.compareTo(movieStartTime) >=0))
-               ) {
-                filteredMovieSchedules.add(movieSchedule);
-            }
-                
-        }
-        return filteredMovieSchedules;
-    }*/
+   
 
 }

@@ -36,9 +36,9 @@ public class MovieList extends ListActivity {
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
         registerReceiver(mBroadcastReceiver, filter);
 
-        DroidKinoApplication app = (DroidKinoApplication) getApplication();
-        if (app != null && app.getMovies().size() > 0) {
-            movieList = app.getMovies();
+        DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
+        if (cache.getMovies().size() > 0) {
+            movieList = cache.getMovies();
             publishListAdapters();
             return;
         }
@@ -70,8 +70,8 @@ public class MovieList extends ListActivity {
             } else {
                 movieList = (List<MovieInfo>) intent
                         .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
-                DroidKinoApplication app = (DroidKinoApplication) getApplication();
-                app.setMovies(movieList);
+                DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
+                cache.getMovies().addAll(movieList);
                 publishListAdapters();
             }
         }

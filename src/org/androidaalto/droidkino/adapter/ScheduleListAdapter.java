@@ -1,52 +1,39 @@
 
 package org.androidaalto.droidkino.adapter;
 
-import java.net.URL;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.androidaalto.droidkino.ImageHelper;
 import org.androidaalto.droidkino.MovieSchedule;
-
+import org.androidaalto.droidkino.R;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.androidaalto.droidkino.R;
 
 
 /***
  * Basic implementation of a customer adapter to display the movie list. It
  * should also implement some stuff like filtering.
  * 
- * @author rciovati
+ * @author marcostong17
  */
 public class ScheduleListAdapter extends ArrayAdapter<MovieSchedule> {
  
-    private static final String LOG_TAG = ScheduleListAdapter.class.getCanonicalName();
-
-
     private LayoutInflater mInflater;
 
-    // this is a cache of movie images, used because there are several movie entries for the same title
-    // because there no need to download the same image several times, we save them in cache.
-    private static Map<String, Drawable> movieDrawables;
-    
     private int mResId;
 
     public ScheduleListAdapter(Context context, List<MovieSchedule> schedule) {
         super(context, R.layout.movie_list_item, schedule);
         mInflater = LayoutInflater.from(context);
         mResId = R.layout.movie_list_item; 
-        movieDrawables = new HashMap<String, Drawable>();
     }
   
     @Override
@@ -75,25 +62,8 @@ public class ScheduleListAdapter extends ArrayAdapter<MovieSchedule> {
         viewCache.lenghtInMinutes.setText(String.valueOf(movieSchedule.getLengthInMinutes()) + "m");
         viewCache.dttmShowStart.setText(movieSchedule.getDttmShowStart().substring(11, 16));
         viewCache.theatre.setText(movieSchedule.getTheatre() + "-" + movieSchedule.getTheatreAuditorium());
-        try {
-
-            // Since movie entries are repeated (same movie title for several times and theatres, we save the drawable in cache)
-            Drawable movieDrawable = null;
-            String imageUrl = movieSchedule.getEventSmallImagePortrait();
-            if (movieDrawables.containsKey(imageUrl)) {
-                movieDrawable = movieDrawables.get(imageUrl);
-            } else {
-                URL thumb_u = new URL(imageUrl);
-                movieDrawable = Drawable.createFromStream(thumb_u.openStream(), "src");
-                movieDrawables.put(imageUrl, movieDrawable);
-            }
-            
-            viewCache.smallImagePortrait.setImageDrawable(movieDrawable);
-        }
-        catch (Exception e) {
-            Log.d(LOG_TAG, e.getMessage());
-            viewCache.smallImagePortrait.setImageResource(R.drawable.icon);
-        }
+        
+        ImageHelper.fillUpImageView( viewCache.smallImagePortrait, movieSchedule.getEventSmallImagePortrait(), R.drawable.icon);
 
         return convertView;
     }
