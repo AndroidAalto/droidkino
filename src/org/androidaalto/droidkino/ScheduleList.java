@@ -27,6 +27,9 @@ public class ScheduleList extends ListActivity {
 
     private List<MovieSchedule> scheduleList;
     
+    private String areaId;
+    
+    private String date;
    
     @Override
     protected void onStart() {
@@ -37,7 +40,15 @@ public class ScheduleList extends ListActivity {
         registerReceiver(mBroadcastReceiver, filter);
 
         DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
-        if (cache.getSchedules().size() > 0) {
+        
+        areaId = getIntent().getStringExtra(BaseFinnkinoParser.PARAM_AREA);
+        date = getIntent().getStringExtra(BaseFinnkinoParser.PARAM_DATE);
+        
+        
+        if (cache.getSchedules().containsKey(areaId + "-" + date)) {
+            
+            scheduleList = cache.getSchedules().get(areaId + "-" + date);
+            publishListAdapters();
             return;
         }
 
@@ -75,23 +86,24 @@ public class ScheduleList extends ListActivity {
                 //DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
                 //cache.getSchedules(scheduleList);
                 
-                ScheduleListAdapter adapter = new ScheduleListAdapter(ScheduleList.this, scheduleList);
-
-                setListAdapter(adapter);
-
-                adapter.sortByStartTime();
-
+                DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
+                cache.getSchedules().put(areaId+"-"+date, scheduleList);
+                
+                publishListAdapters();
                
             }
         }
     };
     
+    private void publishListAdapters() {
+        ScheduleListAdapter adapter = new ScheduleListAdapter(ScheduleList.this, scheduleList);
+        setListAdapter(adapter);
+        adapter.sortByStartTime();
+    }
     
     private void startDataFetchService() {
         Intent serviceIntent = new Intent(ScheduleList.this, DataFetchService.class);
-        String areaId = getIntent().getStringExtra(BaseFinnkinoParser.PARAM_AREA);
-        String date = getIntent().getStringExtra(BaseFinnkinoParser.PARAM_DATE);
-
+        
         serviceIntent.putExtra(DataFetchService.DATA_TO_FETCH, DroidKinoIntent.SCHEDULE_LIST_EXTRA);
         serviceIntent.putExtra(BaseFinnkinoParser.PARAM_AREA, areaId);
         serviceIntent.putExtra(BaseFinnkinoParser.PARAM_DATE, date);

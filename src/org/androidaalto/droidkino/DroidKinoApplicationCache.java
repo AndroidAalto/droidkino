@@ -23,7 +23,8 @@ public class DroidKinoApplicationCache {
 
     private List<TheatreArea> theatres;
     
-    private List<MovieSchedule> schedules;
+    // this is a cache of movie schedule, so that searches of the same area-date are kept in cache
+    private Map<String, List<MovieSchedule>> schedules;
     
     // this is a cache of movie images, used because there are several movie entries for the same title
     // because there no need to download the same image several times, we save them in cache.
@@ -32,7 +33,7 @@ public class DroidKinoApplicationCache {
     private DroidKinoApplicationCache() {
         movies = new ArrayList<MovieInfo>();
         theatres = new ArrayList<TheatreArea>();
-        schedules = new ArrayList<MovieSchedule>();
+        schedules = new HashMap<String, List<MovieSchedule>>();
         movieDrawables = new HashMap<String, Drawable>();
     }
     
@@ -44,7 +45,7 @@ public class DroidKinoApplicationCache {
     }
     
     /***
-     * Returns a previous saved list of the movies
+     * Returns the ached list of movie info (for all theatre areas)
      * 
      * @return
      */
@@ -54,7 +55,7 @@ public class DroidKinoApplicationCache {
     
   
     /***
-     * Returns a list of unique theatres that are in the movie list of the app (this might be hardcoded since the list is quite small and not changing much)
+     * Returns cached list of theatre areas
      * 
      * @return
      */
@@ -62,10 +63,20 @@ public class DroidKinoApplicationCache {
        return this.theatres;
     }
 
-    public List<MovieSchedule> getSchedules() {
+    /***
+     * Returns the cached map of list of movie schedules
+     * 
+     * @return A map of movie schedule lists, where the key is the concatenation of area Id, dash (-) and date (dd.mm.yyyy), for example 1012-25.09.2011 
+     */
+    public Map<String, List<MovieSchedule>> getSchedules() {
         return this.schedules;
     }
     
+    /***
+     * Returns the cached map of movie drawables
+     * 
+     * @return A map of movie drawables, where the key is the url of the drawable
+     */
     public Map<String, Drawable> getMovieDrawables() {
         return this.movieDrawables;
     }
