@@ -24,7 +24,7 @@ import java.net.URL;
 /***
  * Base class for all the finniko.fi's parsers
  * 
- * @author rciovati
+ * @author rciovati, marcostong17
  */
 public abstract class BaseFinnkinoParser implements MovieParser {
 
@@ -108,6 +108,8 @@ public abstract class BaseFinnkinoParser implements MovieParser {
     public static final String THUMBNAIL_LOCATION = "ThumbnailLocation";
     
     public static final String MEDIA_RESOURCE_FORMAT = "MediaResourceFormat";
+    
+    public static final String MEDIA_RESOURCE_SUB_TYPE = "MediaResourceSubType";
     
 
 

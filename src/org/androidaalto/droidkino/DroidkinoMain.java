@@ -41,17 +41,17 @@ public class DroidkinoMain extends Activity {
         
         movieListButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent heartMonitor = new Intent(DroidkinoMain.this,
+                Intent movieListIntent = new Intent(DroidkinoMain.this,
                         MovieList.class);
-                startActivity(heartMonitor);
+                startActivity(movieListIntent);
             }
         });
         
         searchScheduleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent heartMonitor = new Intent(DroidkinoMain.this,
+                Intent searchScheduleIntent = new Intent(DroidkinoMain.this,
                         SearchSchedule.class);
-                startActivity(heartMonitor);
+                startActivity(searchScheduleIntent);
             }
         });
     }
