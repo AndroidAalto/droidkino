@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.androidaalto.droidkino.ImageHelper;
-import org.androidaalto.droidkino.MovieInfo;
 import org.androidaalto.droidkino.R;
+import org.androidaalto.droidkino.beans.MovieInfo;
 
 import android.content.Context;
 import android.view.LayoutInflater;

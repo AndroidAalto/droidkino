@@ -8,6 +8,14 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageView;
 
+
+/**
+ * This class provides functionality to download an image from the FinnKino server and fillup an ImageView with it.
+ * 
+ * 
+ * @author marcostong17
+ *
+ */
 public class ImageHelper{
 
     private static final String LOG_TAG = ImageHelper.class.getName(); 

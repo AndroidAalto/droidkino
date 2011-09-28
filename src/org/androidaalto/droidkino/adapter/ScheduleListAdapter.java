@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.androidaalto.droidkino.ImageHelper;
-import org.androidaalto.droidkino.MovieSchedule;
 import org.androidaalto.droidkino.R;
+import org.androidaalto.droidkino.beans.MovieSchedule;
 
 import android.content.Context;
 import android.view.LayoutInflater;

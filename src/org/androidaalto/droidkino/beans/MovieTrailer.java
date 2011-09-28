@@ -1,7 +1,15 @@
-package org.androidaalto.droidkino;
+package org.androidaalto.droidkino.beans;
 
 import java.io.Serializable;
 
+/**
+ * This bean represents the info coming for movie trailer video
+ * This info shall be filled up from the "Videos" subelements (http://www.finnkino.fi/xml/Event) 
+ * that optionally comes for each "Event" (Movie Info)
+ *  
+ * @author marcostong17
+ *
+ */
 public class MovieTrailer implements Serializable {
 
     private static final long serialVersionUID = 4798296070082162066L;
