@@ -1,4 +1,4 @@
-package org.androidaalto.droidkino;
+package org.androidaalto.droidkino.beans;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -6,6 +6,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * This bean represents the info coming for movie show, i.e. a single time event at a particular theatre and time.
+ * This info shall be filled up from http://www.finnkino.fi/xml/Schedule
+ * @author marcostong17
+ *
+ */
 public class MovieSchedule  implements Serializable {
 
     private static final long serialVersionUID = -4857864210593759038L;

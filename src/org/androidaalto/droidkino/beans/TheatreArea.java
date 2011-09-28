@@ -1,7 +1,15 @@
-package org.androidaalto.droidkino;
+package org.androidaalto.droidkino.beans;
 
 import java.io.Serializable;
 
+
+/**
+ * This bean represents the info coming for Theatre Area, which is a region of movie theatres
+ * This info shall be filled up from the http://www.finnkino.fi/xml/TheatreAreas/
+ *  
+ * @author marcostong17
+ *
+ */
 public class TheatreArea implements Serializable {
     
     private static final long serialVersionUID = -4149079795724782918L;

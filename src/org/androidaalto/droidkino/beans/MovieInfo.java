@@ -20,12 +20,19 @@
 
  ******************************************************************************/
 
-package org.androidaalto.droidkino;
+package org.androidaalto.droidkino.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This bean represents the info coming for movie info, i.e. a movie release with the info like year, synopsis, etc.
+ * (do not confuse with schedules, which repeat info about movie but are intended for a particular show). 
+ * This info shall be filled up from http://www.finnkino.fi/xml/Events
+ * @author marcostong17
+ *
+ */
 public class MovieInfo implements Serializable {
 
     private static final long serialVersionUID = -6630023918429921176L;

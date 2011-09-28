@@ -20,11 +20,15 @@
 
  ******************************************************************************/
 
-package org.androidaalto.droidkino;
+package org.androidaalto.droidkino.activities;
 
 import java.util.Calendar;
 import java.util.List;
 
+import org.androidaalto.droidkino.DroidKinoApplicationCache;
+import org.androidaalto.droidkino.DroidKinoIntent;
+import org.androidaalto.droidkino.R;
+import org.androidaalto.droidkino.beans.TheatreArea;
 import org.androidaalto.droidkino.service.DataFetchService;
 import org.androidaalto.droidkino.xml.BaseFinnkinoParser;
 
@@ -47,6 +51,15 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+/**
+ * A list type of activity for schedules that makes use of a custom adapter to show a custom list using MovieSchedule beans.
+ * The list depends is specific to a particular Theathre Area and Date.
+ * It first checks if the requested MovieSchedule list is in the DroidKinoApplicationCache to grab the list from there, otherwise I calls
+ * the DataFetchService which downloads the info from the FinnKino server.
+ * 
+ * @author marcostong17
+ * @see TheatreArea
+ */
 public class SearchSchedule extends Activity {
 
     public static final String LOG_TAG = SearchSchedule.class.getCanonicalName();

@@ -23,17 +23,17 @@
 	<uses-sdk android:minSdkVersion="8" />
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
-		<activity android:name=".DroidkinoMain" android:label="@string/app_name">
+		<activity android:name=".activities.DroidkinoMain" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name="MovieList"/>
-		<activity android:name="MovieDetail"/>
-		<activity android:name="ScheduleList"/>
-		<activity android:name="SearchSchedule"/>
-		<activity android:name="VideoPlayer"/>
+		<activity android:name=".activities.MovieList"/>
+		<activity android:name=".activities.MovieDetail"/>
+		<activity android:name=".activities.ScheduleList"/>
+		<activity android:name=".activities.SearchSchedule"/>
+		<activity android:name=".activities.VideoPlayer"/>
 		<service android:name=".service.DataFetchService"></service>
 
 	</application>
