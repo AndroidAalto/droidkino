@@ -20,7 +20,9 @@
 
  ******************************************************************************/
 
-package org.androidaalto.droidkino;
+package org.androidaalto.droidkino.activities;
+
+import org.androidaalto.droidkino.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,6 +30,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * Main activity of the application, intented to be the dashboard, currently with two main buttons for the options:
+ * a) Movie List
+ * b) Search schedules
+ * 
+ * @author marcostong17
+ *
+ */
 public class DroidkinoMain extends Activity {
 
     public static final String LOG_TAG = DroidkinoMain.class.getCanonicalName();
@@ -36,9 +46,13 @@ public class DroidkinoMain extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        //gather references to the buttons
         Button movieListButton = (Button) findViewById(R.id.movieListButton);
         Button searchScheduleButton = (Button) findViewById(R.id.searchScheduleButton);
         
+        
+        // set the listeners with simple intents to transition to the corresponding activity
         movieListButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent movieListIntent = new Intent(DroidkinoMain.this,

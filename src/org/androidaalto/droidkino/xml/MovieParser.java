@@ -19,7 +19,9 @@ package org.androidaalto.droidkino.xml;
 
 import java.util.List;
 
-import org.androidaalto.droidkino.*;
+import org.androidaalto.droidkino.beans.MovieInfo;
+import org.androidaalto.droidkino.beans.MovieSchedule;
+import org.androidaalto.droidkino.beans.TheatreArea;
 
 /***
  * All the parser in Droidkino should implement this interface

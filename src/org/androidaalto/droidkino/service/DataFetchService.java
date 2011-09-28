@@ -26,9 +26,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.androidaalto.droidkino.DroidKinoIntent;
-import org.androidaalto.droidkino.MovieInfo;
-import org.androidaalto.droidkino.MovieSchedule;
-import org.androidaalto.droidkino.TheatreArea;
+import org.androidaalto.droidkino.beans.MovieInfo;
+import org.androidaalto.droidkino.beans.MovieSchedule;
+import org.androidaalto.droidkino.beans.TheatreArea;
 import org.androidaalto.droidkino.xml.BaseFinnkinoParser;
 import org.androidaalto.droidkino.xml.ParserFactory;
 

@@ -22,10 +22,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.androidaalto.droidkino.MovieInfo;
-import org.androidaalto.droidkino.MovieSchedule;
-import org.androidaalto.droidkino.MovieTrailer;
-import org.androidaalto.droidkino.TheatreArea;
+import org.androidaalto.droidkino.beans.MovieInfo;
+import org.androidaalto.droidkino.beans.MovieSchedule;
+import org.androidaalto.droidkino.beans.MovieTrailer;
+import org.androidaalto.droidkino.beans.TheatreArea;
 
 import android.sax.Element;
 import android.sax.EndElementListener;
@@ -33,6 +33,14 @@ import android.sax.EndTextElementListener;
 import android.sax.RootElement;
 import android.util.Xml;
 
+/**
+ * A SAX implementation of the Base FinnKino XML parser
+ * 
+ * @author marcostong17
+ * @see BaseFinnkinoParser
+ * @see MovieParser
+ * 
+ */
 public class FinnikoSAXParser extends BaseFinnkinoParser {
 
     /**

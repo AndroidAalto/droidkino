@@ -1,9 +1,13 @@
 
-package org.androidaalto.droidkino;
+package org.androidaalto.droidkino.activities;
 
 import java.util.List;
 
+import org.androidaalto.droidkino.DroidKinoApplicationCache;
+import org.androidaalto.droidkino.DroidKinoIntent;
+import org.androidaalto.droidkino.R;
 import org.androidaalto.droidkino.adapter.MovieListAdapter;
+import org.androidaalto.droidkino.beans.MovieInfo;
 import org.androidaalto.droidkino.service.DataFetchService;
 
 import android.app.ListActivity;
@@ -18,6 +22,16 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * A list type of activity for movies that makes use of a custom adapter to show a custom list using MovieInfo beans.
+ * It first checks if the MovieInfo list is in the DroidKinoApplicationCache to grab the list from there, otherwise I calls
+ * the DataFetchService which downloads the info from the FinnKino server.
+ * 
+ * @author marcostong17
+ * @see MovieListAdapter
+ * @see MovieInfo
+ * @see DroidKinoApplicationCache
+ */
 public class MovieList extends ListActivity {
     
     public static final String LOG_TAG = MovieList.class.getCanonicalName();
@@ -28,10 +42,15 @@ public class MovieList extends ListActivity {
 
     private List<MovieInfo> movieList;
     
+    /**
+     * Initializes the MovieInfo list, either from the DroidKinoApplicationCache if it was already retrieved otherwise it trigggers
+     * the DataFetchService to download it from the FinnKino server
+     */
     @Override
     protected void onStart() {
         super.onStart();
 
+        
         IntentFilter filter = new IntentFilter(DroidKinoIntent.FETCH_COMPLETE.getAction());
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
         registerReceiver(mBroadcastReceiver, filter);
@@ -56,6 +75,8 @@ public class MovieList extends ListActivity {
     
     /***
      * BroadReceiver for getting the result of the data fetching
+     * specifically the list of MovieInfo beans (DroidKinoIntent.MOVIE_LIST_EXTRA)
+     * and it puts it into the DroidKinoApplicationCache
      */
     final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @SuppressWarnings("unchecked")
@@ -77,6 +98,10 @@ public class MovieList extends ListActivity {
         }
     };
     
+    /**
+     * Sets the list of MovieInfo beans to a MovieListAdapter, 
+     * which is then set as the adapter for this activity.
+     */
     private void publishListAdapters() {
         MovieListAdapter adapter = new MovieListAdapter(MovieList.this, movieList);
 
@@ -96,6 +121,10 @@ public class MovieList extends ListActivity {
         super.onStop();
     }
     
+    /**
+     * If an a item is clicked then a the Movie Detail activity is launched, 
+     * passing the corresponding MovieInfo bean in the intent extras.
+     */
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
