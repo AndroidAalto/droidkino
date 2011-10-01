@@ -48,6 +48,34 @@
 				android:ellipsize="end"/>		
 	    </LinearLayout>    
     </LinearLayout>
+    
+	<ProgressBar android:id="@+id/movie_imdb_progress"
+		style="?android:attr/progressBarStyleSmall"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:paddingLeft="10dip"
+		android:paddingTop="10dip"/>
+	<LinearLayout android:id="@+id/movie_imdb_info"
+		android:orientation="horizontal"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:paddingLeft="10dip"
+		android:paddingTop="10dip"
+		android:visibility="gone">
+		<TextView android:id="@+id/movie_imdb_rating_text"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_marginRight="10dp"
+			android:text="@string/imdb_rating"/>
+		<RatingBar android:id="@+id/movie_imdb_rating_bar"
+			style="?android:attr/ratingBarStyleSmall"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_marginTop="5dp"
+			android:stepSize="0.1"
+			android:numStars="5"/>
+	</LinearLayout>
+    
     <LinearLayout android:orientation="vertical" 
 	    android:layout_width="match_parent" 
 	    android:layout_height="wrap_content" 
