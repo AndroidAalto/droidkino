@@ -28,4 +28,5 @@
     <string name="searching_movies">Searching movies...</string>
     <string name="fetching_movies">Fetching movie information...</string>
     <string name="search">Search</string>
+    <string name="imdb_rating">IMDB Rating</string>
 </resources>
