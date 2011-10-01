@@ -6,7 +6,10 @@ import org.androidaalto.droidkino.beans.MovieInfo;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 /**
@@ -53,7 +56,7 @@ public class MovieDetail extends Activity {
         
         ImageHelper.fillUpImageView(largePortraitImageView, movieInfo.getEventLargeImagePortrait(), R.drawable.android_99_146);
         
-        
+        fetchImdbInfo();
         
         /*ImageView videoThumbnailImageView = (ImageView) findViewById(R.id.image_video_thumbnail);
         videoThumbnailImageView.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +69,24 @@ public class MovieDetail extends Activity {
         });*/
     }
     
-    
+    private void fetchImdbInfo() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final LinearLayout imdbInfoLayout = (LinearLayout) findViewById(R.id.movie_imdb_info);
+                final RatingBar ratingView = (RatingBar) imdbInfoLayout.findViewById(R.id.movie_imdb_rating_bar);
+                
+                // get the rating
+                
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ratingView.setRating(2f);
+                        imdbInfoLayout.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        }).start();
+    }
     
 }
