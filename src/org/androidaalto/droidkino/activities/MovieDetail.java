@@ -2,7 +2,9 @@ package org.androidaalto.droidkino.activities;
 
 import org.androidaalto.droidkino.ImageHelper;
 import org.androidaalto.droidkino.R;
+import org.androidaalto.droidkino.beans.ImdbInfo;
 import org.androidaalto.droidkino.beans.MovieInfo;
+import org.androidaalto.droidkino.imdb.ImdbApiClient;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -24,7 +26,6 @@ import android.widget.TextView;
 public class MovieDetail extends Activity {
 
     public static final String MOVIE_INFO_EXTRA = "movie_info";
-    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class MovieDetail extends Activity {
         
         ImageHelper.fillUpImageView(largePortraitImageView, movieInfo.getEventLargeImagePortrait(), R.drawable.android_99_146);
         
-        fetchImdbInfo();
+        fetchImdbInfo(movieInfo.getOriginalTitle(), movieInfo.getProductionYear());
         
         /*ImageView videoThumbnailImageView = (ImageView) findViewById(R.id.image_video_thumbnail);
         videoThumbnailImageView.setOnClickListener(new View.OnClickListener() {
@@ -69,19 +70,22 @@ public class MovieDetail extends Activity {
         });*/
     }
     
-    private void fetchImdbInfo() {
+    private void fetchImdbInfo(final String title, final String year) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 final LinearLayout imdbInfoLayout = (LinearLayout) findViewById(R.id.movie_imdb_info);
                 final RatingBar ratingView = (RatingBar) imdbInfoLayout.findViewById(R.id.movie_imdb_rating_bar);
                 
-                // get the rating
+                ImdbInfo info = new ImdbApiClient().fetchInfo(title, year);
+                
+                final float rating = info.getRating() / 2;
                 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ratingView.setRating(2f);
+                        ratingView.setRating(rating);
+                        findViewById(R.id.movie_imdb_progress).setVisibility(View.GONE);
                         imdbInfoLayout.setVisibility(View.VISIBLE);
                     }
                 });
