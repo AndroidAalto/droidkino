@@ -55,7 +55,7 @@ public class ImdbApiClient {
             if (json.getString("Response").equalsIgnoreCase("True")) {
                 imbdInfo.setRating(new Float(json.getString("Rating")));
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         
