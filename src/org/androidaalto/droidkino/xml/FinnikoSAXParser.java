@@ -218,7 +218,7 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
 
                    @Override
                    public void end(String body) {
-                       movieInfo.setTitle(body);
+                       movieTrailer.setTitle(body);
                    }
                });
        eventVideo.getChild(LOCATION).setEndTextElementListener(
