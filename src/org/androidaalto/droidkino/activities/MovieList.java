@@ -43,6 +43,16 @@ public class MovieList extends ListActivity {
     private List<MovieInfo> movieList;
     
     /**
+     * Index of the top most item in the list.
+     */
+    private int savedTopMostElementIndex;
+
+    /**
+     * Position in pixels of the top most element of the list.
+     */
+    private int savedTopMostElementPosition;
+    
+    /**
      * Initializes the MovieInfo list, either from the DroidKinoApplicationCache if it was already retrieved otherwise it trigggers
      * the DataFetchService to download it from the FinnKino server
      */
@@ -71,6 +81,12 @@ public class MovieList extends ListActivity {
         fetchingXmlProgress = ProgressDialog.show(this, "", getString(R.string.fetching_movies));
 
         startDataFetchService();
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        restoreScrollPosition();
     }
     
     /***
@@ -128,9 +144,33 @@ public class MovieList extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+        saveScrollPosition(l);
         Intent i = new Intent(MovieList.this, MovieDetail.class);
         i.putExtra(MovieDetail.MOVIE_INFO_EXTRA, movieList.get(position));
         startActivity(i);
+    }
+
+    /**
+     * This method saves the scroll position. 
+     * 
+     * TODO: Position is lost if device orientation is changed. Maybe use
+     * onSaveInstanceState/onRestoreInstanceState methods.
+     * 
+     * @param l ListView
+     */
+    private void saveScrollPosition(ListView l) {
+        this.savedTopMostElementIndex = l.getFirstVisiblePosition();
+        View topItem = l.getChildAt(0);
+        this.savedTopMostElementPosition = topItem.getTop();
+    }
+    
+    /**
+     * Restore the previous scroll position on the list.
+     */
+    private void restoreScrollPosition() {
+        if (this.savedTopMostElementIndex > 0){
+            getListView().setSelectionFromTop(this.savedTopMostElementIndex, this.savedTopMostElementPosition);
+        }
     }
 
 }
