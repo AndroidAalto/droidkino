@@ -120,4 +120,17 @@ public class MovieSchedule  implements Serializable {
         copy.eventSmallImagePortrait = eventSmallImagePortrait;
         return copy;
     }
+    
+    public void clean() {
+        this.eventId = null;
+        this.title = null;
+        this.lengthInMinutes = 0;
+        this.dttmShowStart = null;
+        this.theatreId = null;
+        this.theatre = null;
+        this.theatreAuditorium = null;
+        this.is3D = false;
+        this.language = null;
+        this.eventSmallImagePortrait = null;
+    }
 }

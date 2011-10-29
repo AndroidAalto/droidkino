@@ -59,4 +59,12 @@ public class MovieTrailer implements Serializable {
         movieTrailer.mediaResourceSubType = mediaResourceSubType;
         return movieTrailer;
     }
+    
+    public void clean() {
+        this.title = null;
+        this.location = null;
+        this.thumbnailLocation = null;
+        this.mediaResourceFormat = null;
+        this.mediaResourceSubType = null;
+    }
 }

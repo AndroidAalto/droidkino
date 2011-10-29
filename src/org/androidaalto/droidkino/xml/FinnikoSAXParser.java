@@ -68,6 +68,7 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
             @Override
             public void end() {
                 movies.add(movieInfo.copy());
+                movieInfo.clean();
             }
         });
         
@@ -76,6 +77,7 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
             @Override
             public void end() {
                 movieInfo.addMovieTrailer(movieTrailer.copy());
+                movieTrailer.clean();
             }
         });
 
@@ -288,6 +290,7 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
             @Override
             public void end() {
                 theatres.add(theatreArea.copy());
+                theatreArea.clean();
             }
         });
         
@@ -336,6 +339,7 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
             @Override
             public void end() {
                 schedules.add(movieSchedule.copy());
+                movieSchedule.clean();
             }
         });
         
