@@ -219,5 +219,23 @@ public class MovieInfo implements Serializable {
         copy.movieTrailers = new ArrayList<MovieTrailer>(movieTrailers);
         return copy;
     }
+    
+    public void clean() {
+        this.eventId = null;
+        this.title = null;
+        this.originalTitle = null;
+        this.productionYear = null;
+        this.lenghtInMinutes = null;
+        this.dtLocalRelease = null;
+        this.ratingLabel = null;
+        this.localDistributorName = null;
+        this.globalDistributorName = null;
+        this.genres = null;        
+        this.synopsis = null;
+        this.eventSmallImagePortrait = null;
+        this.eventLargeImagePortrait = null;
+        this.eventSmallImageLandscape = null;
+        this.eventLargeImageLandscape = null;
+    }
 
 }

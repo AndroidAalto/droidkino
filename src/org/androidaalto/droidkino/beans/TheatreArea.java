@@ -34,4 +34,9 @@ public class TheatreArea implements Serializable {
         copy.name = name;
         return copy;
     }
+    
+    public void clean() {
+        this.id = null;
+        this.name = null;
+    }
 }
