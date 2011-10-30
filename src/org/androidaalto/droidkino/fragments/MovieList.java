@@ -102,7 +102,7 @@ public class MovieList extends ListFragment {
     private void showDetails(int index) {
         
         //TODO: determine the right value of mDualPane
-        boolean mDualPane = false;
+        boolean mDualPane = true;
         
         if (mDualPane) {
             // We can display everything in-place with fragments, so update

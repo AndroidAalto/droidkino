@@ -1,5 +1,8 @@
 package org.androidaalto.droidkino.fragments;
 
+import java.util.List;
+
+import org.androidaalto.droidkino.DroidKinoApplicationCache;
 import org.androidaalto.droidkino.ImageHelper;
 import org.androidaalto.droidkino.R;
 import org.androidaalto.droidkino.beans.ImdbInfo;
@@ -49,9 +52,11 @@ public class MovieDetail extends Fragment {
         
         
         // Getting the MovieInfo bean with all the info about the movie
-        Bundle extras = getActivity().getIntent().getExtras(); 
-        if (extras != null) {
-            final MovieInfo movieInfo = (MovieInfo) extras.get(MOVIE_INFO_EXTRA);
+        List<MovieInfo> movieList = DroidKinoApplicationCache.getInstance().getMovies();
+        if (movieList != null && getShownIndex()>=0) {
+            
+
+            MovieInfo movieInfo = (MovieInfo) movieList.get(getShownIndex());
             if (movieInfo!=null) {
                 // Setting the info in the UI widgets
                 titleTextView.setText(movieInfo.getTitle());
@@ -105,6 +110,9 @@ public class MovieDetail extends Fragment {
     }
 
     public int getShownIndex() {
+        if (getArguments() == null) {
+            return -1;
+        }
         return getArguments().getInt("index", 0);
     }
 
