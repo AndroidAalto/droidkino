@@ -17,6 +17,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -32,7 +35,7 @@ import android.widget.Toast;
  * @see MovieInfo
  * @see DroidKinoApplicationCache
  */
-public class MovieList extends ListActivity {
+public class MovieList extends ListFragment {
     
     public static final String LOG_TAG = MovieList.class.getCanonicalName();
 
@@ -57,13 +60,13 @@ public class MovieList extends ListActivity {
      * the DataFetchService to download it from the FinnKino server
      */
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         
         IntentFilter filter = new IntentFilter(DroidKinoIntent.FETCH_COMPLETE.getAction());
         filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
-        registerReceiver(mBroadcastReceiver, filter);
+        getActivity().registerReceiver(mBroadcastReceiver, filter);
 
         DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
         if (cache.getMovies().size() > 0) {
@@ -78,16 +81,16 @@ public class MovieList extends ListActivity {
             return;
         }
 
-        fetchingXmlProgress = ProgressDialog.show(this, "", getString(R.string.fetching_movies));
+        fetchingXmlProgress = ProgressDialog.show(getActivity(), "", getString(R.string.fetching_movies));
 
         startDataFetchService();
     }
     
-    @Override
+   /* @Override
     protected void onResume() {
         super.onResume();
         restoreScrollPosition();
-    }
+    }*/
     
     /***
      * BroadReceiver for getting the result of the data fetching
@@ -103,7 +106,7 @@ public class MovieList extends ListActivity {
             fetchingXmlProgress.dismiss();
 
             if (intent.getAction().equals(DroidKinoIntent.FETCH_FAILED.getAction())) {
-                Toast.makeText(MovieList.this, "Fetch failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Fetch failed", Toast.LENGTH_SHORT).show();
             } else {
                 movieList = (List<MovieInfo>) intent
                         .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
@@ -119,21 +122,21 @@ public class MovieList extends ListActivity {
      * which is then set as the adapter for this activity.
      */
     private void publishListAdapters() {
-        MovieListAdapter adapter = new MovieListAdapter(MovieList.this, movieList);
+        MovieListAdapter adapter = new MovieListAdapter(getActivity(), movieList);
 
         setListAdapter(adapter);
 
         adapter.sortByTitle();
     }
     private void startDataFetchService() {
-        Intent serviceIntent = new Intent(MovieList.this, DataFetchService.class);
+        Intent serviceIntent = new Intent(getActivity(), DataFetchService.class);
         serviceIntent.putExtra(DataFetchService.DATA_TO_FETCH, DroidKinoIntent.MOVIE_LIST_EXTRA);
-        startService(serviceIntent);
+        getActivity().startService(serviceIntent);
     }
 
     @Override
-    protected void onStop() {
-        unregisterReceiver(mBroadcastReceiver);
+    public void onStop() {
+        getActivity().unregisterReceiver(mBroadcastReceiver);
         super.onStop();
     }
     
@@ -142,12 +145,15 @@ public class MovieList extends ListActivity {
      * passing the corresponding MovieInfo bean in the intent extras.
      */
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        saveScrollPosition(l);
-        Intent i = new Intent(MovieList.this, MovieDetail.class);
+        /*saveScrollPosition(l);
+        Intent i = new Intent(getActivity(), MovieDetail.class);
         i.putExtra(MovieDetail.MOVIE_INFO_EXTRA, movieList.get(position));
-        startActivity(i);
+        startActivity(i);*/
+        showDetails(position);
+
+        
     }
 
     /**
@@ -170,6 +176,48 @@ public class MovieList extends ListActivity {
     private void restoreScrollPosition() {
         if (this.savedTopMostElementIndex > 0){
             getListView().setSelectionFromTop(this.savedTopMostElementIndex, this.savedTopMostElementPosition);
+        }
+    }
+
+    
+    /**
+     * Helper function to show the details of a selected item, either by
+     * displaying a fragment in-place in the current UI, or starting a
+     * whole new activity in which it is displayed.
+     */
+    private void showDetails(int index) {
+        int mCurCheckPosition = index;
+        
+        //TODO: determine the right value of mDualPane
+        boolean mDualPane = false;
+        
+        if (mDualPane) {
+         // We can display everything in-place with fragments, so update
+            // the list to highlight the selected item and show the data.
+            getListView().setItemChecked(index, true);
+
+            // Check what fragment is currently shown, replace if needed.
+            MovieDetail details = (MovieDetail)
+                    getFragmentManager().findFragmentById(R.id.details);
+            if (details == null || details.getShownIndex() != index) {
+                // Make new fragment to show this selection.
+                details = MovieDetail.newInstance(index);
+
+                // Execute a transaction, replacing any existing fragment
+                // with this one inside the frame.
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.details, details);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+            }  else {
+                // Otherwise we need to launch a new activity to display
+                // the dialog fragment with selected text.
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), DroidkinoDetails.class);
+                intent.putExtra("index", index);
+                startActivity(intent);
+            }
+
         }
     }
 

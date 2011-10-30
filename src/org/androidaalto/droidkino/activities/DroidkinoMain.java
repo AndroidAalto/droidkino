@@ -31,9 +31,9 @@ import android.view.View;
 import android.widget.Button;
 
 /**
- * Main activity of the application, intented to be the dashboard, currently with two main buttons for the options:
- * a) Movie List
- * b) Search schedules
+ * Main activity of the application which is a layout with
+ * one fragment for the movie list and optionally a second 
+ * fragment for the movie detail (if the screen is wide enough)
  * 
  * @author marcostong17
  *
@@ -46,27 +46,5 @@ public class DroidkinoMain extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-        //gather references to the buttons
-        Button movieListButton = (Button) findViewById(R.id.movieListButton);
-        Button searchScheduleButton = (Button) findViewById(R.id.searchScheduleButton);
-        
-        
-        // set the listeners with simple intents to transition to the corresponding activity
-        movieListButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent movieListIntent = new Intent(DroidkinoMain.this,
-                        MovieList.class);
-                startActivity(movieListIntent);
-            }
-        });
-        
-        searchScheduleButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent searchScheduleIntent = new Intent(DroidkinoMain.this,
-                        SearchSchedule.class);
-                startActivity(searchScheduleIntent);
-            }
-        });
     }
 }
