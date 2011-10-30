@@ -6,7 +6,8 @@ import org.androidaalto.droidkino.beans.ImdbInfo;
 import org.androidaalto.droidkino.beans.MovieInfo;
 import org.androidaalto.droidkino.imdb.ImdbApiClient;
 
-import android.app.Activity;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,26 +34,13 @@ public class MovieDetail extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState)  {
-        
-        if (container == null) {
-            // We have different layouts, and in one of them this
-            // fragment's containing frame doesn't exist.  The fragment
-            // may still be created from its saved state, but there is
-            // no reason to try to create its view hierarchy because it
-            // won't be displayed.  Note this is not needed -- we could
-            // just run the code below, where we would create and return
-            // the view hierarchy; it would just never be used.
-            return null;
-        }
-
-        
-        
         super.onActivityCreated(savedInstanceState);
-        View view = getActivity().findViewById(R.id.details);
         
-        // Getting the MovieInfo bean with all the info about the movie
-        final MovieInfo movieInfo = (MovieInfo) getActivity().getIntent().getExtras().get(MOVIE_INFO_EXTRA);
+        ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.movie_detail, null);
         
+        
+        
+          
         // Getting references to the UI widgets where info is shown
         TextView titleTextView = (TextView) getActivity().findViewById(R.id.movie_title);
         TextView originalTitleTextView = (TextView) getActivity().findViewById(R.id.movie_original_title);
@@ -64,29 +52,26 @@ public class MovieDetail extends Fragment {
         ImageView largePortraitImageView = (ImageView) getActivity().findViewById(R.id.movie_large_portrait);
         
         
-        // Setting the info in the UI widgets
-        titleTextView.setText(movieInfo.getTitle());
-        originalTitleTextView.setText(movieInfo.getOriginalTitle());
-        productionYearTextView.setText(movieInfo.getProductionYear());
-        ratingLabelTextView.setText(movieInfo.getRatingLabel());
-        localDistributorNameTextView.setText(movieInfo.getLocalDistributorName());
-        genresTextView.setText(movieInfo.getGenres());
-        synopsysTextView.setText(movieInfo.getSynopsis());
+        // Getting the MovieInfo bean with all the info about the movie
+        Bundle extras = getActivity().getIntent().getExtras(); 
+        if (extras != null) {
+            final MovieInfo movieInfo = (MovieInfo) extras.get(MOVIE_INFO_EXTRA);
+            
+            // Setting the info in the UI widgets
+            titleTextView.setText(movieInfo.getTitle());
+            originalTitleTextView.setText(movieInfo.getOriginalTitle());
+            productionYearTextView.setText(movieInfo.getProductionYear());
+            ratingLabelTextView.setText(movieInfo.getRatingLabel());
+            localDistributorNameTextView.setText(movieInfo.getLocalDistributorName());
+            genresTextView.setText(movieInfo.getGenres());
+            synopsysTextView.setText(movieInfo.getSynopsis());
+            
+            ImageHelper.fillUpImageView(largePortraitImageView, movieInfo.getEventLargeImagePortrait(), R.drawable.android_99_146);
+            
+            fetchImdbInfo(movieInfo.getOriginalTitle(), movieInfo.getProductionYear());
+        }
         
-        ImageHelper.fillUpImageView(largePortraitImageView, movieInfo.getEventLargeImagePortrait(), R.drawable.android_99_146);
-        
-        fetchImdbInfo(movieInfo.getOriginalTitle(), movieInfo.getProductionYear());
-        
-        /*ImageView videoThumbnailImageView = (ImageView) findViewById(R.id.image_video_thumbnail);
-        videoThumbnailImageView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent movieTrailerIntent = new Intent(MovieDetail.this,
-                        VideoPlayer.class);
-                movieTrailerIntent.putExtra(VideoPlayer.VIDEO_URL, movieInfo.get);
-                startActivity(movieTrailerIntent);
-            }
-        });*/
-        return view;
+        return vg;
     }
     
     private void fetchImdbInfo(final String title, final String year) {

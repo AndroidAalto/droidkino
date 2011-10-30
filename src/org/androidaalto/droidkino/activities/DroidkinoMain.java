@@ -24,11 +24,8 @@ package org.androidaalto.droidkino.activities;
 
 import org.androidaalto.droidkino.R;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * Main activity of the application which is a layout with
@@ -38,7 +35,7 @@ import android.widget.Button;
  * @author marcostong17
  *
  */
-public class DroidkinoMain extends Activity {
+public class DroidkinoMain extends FragmentActivity {
 
     public static final String LOG_TAG = DroidkinoMain.class.getCanonicalName();
 

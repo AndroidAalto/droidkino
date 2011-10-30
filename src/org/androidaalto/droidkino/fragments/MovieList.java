@@ -10,7 +10,6 @@ import org.androidaalto.droidkino.adapter.MovieListAdapter;
 import org.androidaalto.droidkino.beans.MovieInfo;
 import org.androidaalto.droidkino.service.DataFetchService;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -186,13 +185,12 @@ public class MovieList extends ListFragment {
      * whole new activity in which it is displayed.
      */
     private void showDetails(int index) {
-        int mCurCheckPosition = index;
         
         //TODO: determine the right value of mDualPane
         boolean mDualPane = false;
         
         if (mDualPane) {
-         // We can display everything in-place with fragments, so update
+            // We can display everything in-place with fragments, so update
             // the list to highlight the selected item and show the data.
             getListView().setItemChecked(index, true);
 
