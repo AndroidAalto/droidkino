@@ -38,11 +38,8 @@ public class MovieList extends ListFragment {
     
     public static final String LOG_TAG = MovieList.class.getCanonicalName();
 
-    private ProgressDialog fetchingXmlProgress;
+    
 
-    public static final String APP_PREFS_FILE = "appx prefs file";
-
-    private List<MovieInfo> movieList;
     
     /**
      * Index of the top most item in the list.
@@ -54,90 +51,8 @@ public class MovieList extends ListFragment {
      */
     private int savedTopMostElementPosition;
     
-    /**
-     * Initializes the MovieInfo list, either from the DroidKinoApplicationCache if it was already retrieved otherwise it trigggers
-     * the DataFetchService to download it from the FinnKino server
-     */
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        
-        IntentFilter filter = new IntentFilter(DroidKinoIntent.FETCH_COMPLETE.getAction());
-        filter.addAction(DroidKinoIntent.FETCH_FAILED.getAction());
-        getActivity().registerReceiver(mBroadcastReceiver, filter);
-
-        DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
-        if (cache.getMovies().size() > 0) {
-            movieList = cache.getMovies();
-            publishListAdapters();
-            return;
-        }
-
-        final SharedPreferences prefs = getActivity().getSharedPreferences(APP_PREFS_FILE, getActivity().MODE_PRIVATE);
-
-        if (prefs.getBoolean(DataFetchService.SERVICE_WORKING, false)) {
-            return;
-        }
-
-        fetchingXmlProgress = ProgressDialog.show(getActivity(), "", getString(R.string.fetching_movies));
-
-        startDataFetchService();
-    }
     
-   /* @Override
-    protected void onResume() {
-        super.onResume();
-        restoreScrollPosition();
-    }*/
-    
-    /***
-     * BroadReceiver for getting the result of the data fetching
-     * specifically the list of MovieInfo beans (DroidKinoIntent.MOVIE_LIST_EXTRA)
-     * and it puts it into the DroidKinoApplicationCache
-     */
-    final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @SuppressWarnings("unchecked")
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(LOG_TAG, "onReceive");
 
-            fetchingXmlProgress.dismiss();
-
-            if (intent.getAction().equals(DroidKinoIntent.FETCH_FAILED.getAction())) {
-                Toast.makeText(getActivity(), "Fetch failed", Toast.LENGTH_SHORT).show();
-            } else {
-                movieList = (List<MovieInfo>) intent
-                        .getSerializableExtra(DroidKinoIntent.MOVIE_LIST_EXTRA);
-                DroidKinoApplicationCache cache = DroidKinoApplicationCache.getInstance();
-                cache.getMovies().addAll(movieList);
-                publishListAdapters();
-            }
-        }
-    };
-    
-    /**
-     * Sets the list of MovieInfo beans to a MovieListAdapter, 
-     * which is then set as the adapter for this activity.
-     */
-    private void publishListAdapters() {
-        MovieListAdapter adapter = new MovieListAdapter(getActivity(), movieList);
-
-        setListAdapter(adapter);
-
-        adapter.sortByTitle();
-    }
-    private void startDataFetchService() {
-        Intent serviceIntent = new Intent(getActivity(), DataFetchService.class);
-        serviceIntent.putExtra(DataFetchService.DATA_TO_FETCH, DroidKinoIntent.MOVIE_LIST_EXTRA);
-        getActivity().startService(serviceIntent);
-    }
-
-    @Override
-    public void onStop() {
-        getActivity().unregisterReceiver(mBroadcastReceiver);
-        super.onStop();
-    }
     
     /**
      * If an a item is clicked then a the Movie Detail activity is launched, 

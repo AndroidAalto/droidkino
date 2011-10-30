@@ -128,6 +128,7 @@ public class DataFetchService extends Service {
                     
                     sendBroadcast(completeIntent);
 
+                    
                     Log.d(LOG_TAG, "Sent fetch complete broadcast... stopping the service");
                 } catch (Exception e) {
                     Log.e(LOG_TAG, "Error while fetching data", e);

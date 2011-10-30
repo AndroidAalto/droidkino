@@ -6,8 +6,6 @@ import org.androidaalto.droidkino.beans.ImdbInfo;
 import org.androidaalto.droidkino.beans.MovieInfo;
 import org.androidaalto.droidkino.imdb.ImdbApiClient;
 
-
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,16 +29,14 @@ public class MovieDetail extends Fragment {
 
     public static final String MOVIE_INFO_EXTRA = "movie_info";
 
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState)  {
         super.onActivityCreated(savedInstanceState);
         
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.movie_detail, null);
-        
-        
-        
-          
+           
         // Getting references to the UI widgets where info is shown
         TextView titleTextView = (TextView) getActivity().findViewById(R.id.movie_title);
         TextView originalTitleTextView = (TextView) getActivity().findViewById(R.id.movie_original_title);
@@ -56,19 +52,20 @@ public class MovieDetail extends Fragment {
         Bundle extras = getActivity().getIntent().getExtras(); 
         if (extras != null) {
             final MovieInfo movieInfo = (MovieInfo) extras.get(MOVIE_INFO_EXTRA);
-            
-            // Setting the info in the UI widgets
-            titleTextView.setText(movieInfo.getTitle());
-            originalTitleTextView.setText(movieInfo.getOriginalTitle());
-            productionYearTextView.setText(movieInfo.getProductionYear());
-            ratingLabelTextView.setText(movieInfo.getRatingLabel());
-            localDistributorNameTextView.setText(movieInfo.getLocalDistributorName());
-            genresTextView.setText(movieInfo.getGenres());
-            synopsysTextView.setText(movieInfo.getSynopsis());
-            
-            ImageHelper.fillUpImageView(largePortraitImageView, movieInfo.getEventLargeImagePortrait(), R.drawable.android_99_146);
-            
-            fetchImdbInfo(movieInfo.getOriginalTitle(), movieInfo.getProductionYear());
+            if (movieInfo!=null) {
+                // Setting the info in the UI widgets
+                titleTextView.setText(movieInfo.getTitle());
+                originalTitleTextView.setText(movieInfo.getOriginalTitle());
+                productionYearTextView.setText(movieInfo.getProductionYear());
+                ratingLabelTextView.setText(movieInfo.getRatingLabel());
+                localDistributorNameTextView.setText(movieInfo.getLocalDistributorName());
+                genresTextView.setText(movieInfo.getGenres());
+                synopsysTextView.setText(movieInfo.getSynopsis());
+                
+                ImageHelper.fillUpImageView(largePortraitImageView, movieInfo.getEventLargeImagePortrait(), R.drawable.android_99_146);
+                
+                fetchImdbInfo(movieInfo.getOriginalTitle(), movieInfo.getProductionYear());
+            }
         }
         
         return vg;
