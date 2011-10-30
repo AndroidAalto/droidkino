@@ -1,5 +1,5 @@
 
-package org.androidaalto.droidkino.activities;
+package org.androidaalto.droidkino.fragments;
 
 import java.util.List;
 
@@ -17,7 +17,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -33,7 +32,7 @@ import android.widget.Toast;
  * @see MovieInfo
  * @see DroidKinoApplicationCache
  */
-public class MovieList extends ListFragment {
+public class MovieList extends ListActivity {
     
     public static final String LOG_TAG = MovieList.class.getCanonicalName();
 
