@@ -75,7 +75,7 @@ public class MovieList extends ListFragment {
             return;
         }
 
-        final SharedPreferences prefs = getSharedPreferences(APP_PREFS_FILE, MODE_PRIVATE);
+        final SharedPreferences prefs = getActivity().getSharedPreferences(APP_PREFS_FILE, getActivity().MODE_PRIVATE);
 
         if (prefs.getBoolean(DataFetchService.SERVICE_WORKING, false)) {
             return;
@@ -213,7 +213,7 @@ public class MovieList extends ListFragment {
                 // Otherwise we need to launch a new activity to display
                 // the dialog fragment with selected text.
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), DroidkinoDetails.class);
+                intent.setClass(getActivity(), MovieDetail.class);
                 intent.putExtra("index", index);
                 startActivity(intent);
             }

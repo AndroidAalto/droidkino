@@ -30,8 +30,9 @@ public class MovieDetail extends Fragment {
 
     public static final String MOVIE_INFO_EXTRA = "movie_info";
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+            Bundle savedInstanceState)  {
         
         if (container == null) {
             // We have different layouts, and in one of them this
@@ -47,20 +48,20 @@ public class MovieDetail extends Fragment {
         
         
         super.onActivityCreated(savedInstanceState);
-        setContentView(R.layout.movie_detail);
+        View view = getActivity().findViewById(R.id.details);
         
         // Getting the MovieInfo bean with all the info about the movie
-        final MovieInfo movieInfo = (MovieInfo) getIntent().getExtras().get(MOVIE_INFO_EXTRA);
+        final MovieInfo movieInfo = (MovieInfo) getActivity().getIntent().getExtras().get(MOVIE_INFO_EXTRA);
         
         // Getting references to the UI widgets where info is shown
-        TextView titleTextView = (TextView) findViewById(R.id.movie_title);
-        TextView originalTitleTextView = (TextView) findViewById(R.id.movie_original_title);
-        TextView productionYearTextView = (TextView) findViewById(R.id.movie_production_year);
-        TextView ratingLabelTextView = (TextView) findViewById(R.id.movie_rating_label);
-        TextView localDistributorNameTextView = (TextView) findViewById(R.id.movie_local_distributor_name);
-        TextView genresTextView = (TextView) findViewById(R.id.movie_genres);
-        TextView synopsysTextView = (TextView) findViewById(R.id.movie_synopsis);
-        ImageView largePortraitImageView = (ImageView) findViewById(R.id.movie_large_portrait);
+        TextView titleTextView = (TextView) getActivity().findViewById(R.id.movie_title);
+        TextView originalTitleTextView = (TextView) getActivity().findViewById(R.id.movie_original_title);
+        TextView productionYearTextView = (TextView) getActivity().findViewById(R.id.movie_production_year);
+        TextView ratingLabelTextView = (TextView) getActivity().findViewById(R.id.movie_rating_label);
+        TextView localDistributorNameTextView = (TextView) getActivity().findViewById(R.id.movie_local_distributor_name);
+        TextView genresTextView = (TextView) getActivity().findViewById(R.id.movie_genres);
+        TextView synopsysTextView = (TextView) getActivity().findViewById(R.id.movie_synopsis);
+        ImageView largePortraitImageView = (ImageView) getActivity().findViewById(R.id.movie_large_portrait);
         
         
         // Setting the info in the UI widgets
@@ -85,24 +86,25 @@ public class MovieDetail extends Fragment {
                 startActivity(movieTrailerIntent);
             }
         });*/
+        return view;
     }
     
     private void fetchImdbInfo(final String title, final String year) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final LinearLayout imdbInfoLayout = (LinearLayout) findViewById(R.id.movie_imdb_info);
+                final LinearLayout imdbInfoLayout = (LinearLayout) getActivity().findViewById(R.id.movie_imdb_info);
                 final RatingBar ratingView = (RatingBar) imdbInfoLayout.findViewById(R.id.movie_imdb_rating_bar);
                 
                 ImdbInfo info = new ImdbApiClient().fetchInfo(title, year);
                 
                 final float rating = info.getRating() / 2;
                 
-                runOnUiThread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         ratingView.setRating(rating);
-                        findViewById(R.id.movie_imdb_progress).setVisibility(View.GONE);
+                        getActivity().findViewById(R.id.movie_imdb_progress).setVisibility(View.GONE);
                         imdbInfoLayout.setVisibility(View.VISIBLE);
                     }
                 });
