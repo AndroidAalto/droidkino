@@ -198,44 +198,4 @@ public class MovieInfo implements Serializable {
     public void addMovieTrailer(MovieTrailer movieTrailer) {
         this.movieTrailers.add(movieTrailer);
     }
-
-    public MovieInfo copy() {
-        MovieInfo copy = new MovieInfo();
-        copy.eventId = eventId;
-        copy.title = title;
-        copy.originalTitle = originalTitle;
-        copy.productionYear = productionYear;
-        copy.lenghtInMinutes = lenghtInMinutes;
-        copy.dtLocalRelease = dtLocalRelease;
-        copy.ratingLabel = ratingLabel;
-        copy.localDistributorName = localDistributorName;
-        copy.globalDistributorName = globalDistributorName;
-        copy.genres = genres;        
-        copy.synopsis = synopsis;
-        copy.eventSmallImagePortrait = eventSmallImagePortrait;
-        copy.eventLargeImagePortrait = eventLargeImagePortrait;
-        copy.eventSmallImageLandscape = eventSmallImageLandscape;
-        copy.eventLargeImageLandscape = eventLargeImageLandscape;
-        copy.movieTrailers = new ArrayList<MovieTrailer>(movieTrailers);
-        return copy;
-    }
-    
-    public void clean() {
-        this.eventId = null;
-        this.title = null;
-        this.originalTitle = null;
-        this.productionYear = null;
-        this.lenghtInMinutes = null;
-        this.dtLocalRelease = null;
-        this.ratingLabel = null;
-        this.localDistributorName = null;
-        this.globalDistributorName = null;
-        this.genres = null;        
-        this.synopsis = null;
-        this.eventSmallImagePortrait = null;
-        this.eventLargeImagePortrait = null;
-        this.eventSmallImageLandscape = null;
-        this.eventLargeImageLandscape = null;
-    }
-
 }

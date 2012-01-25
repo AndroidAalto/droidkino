@@ -42,6 +42,7 @@ import android.util.Xml;
  * 
  */
 public class FinnikoSAXParser extends BaseFinnkinoParser {
+    private MovieInfo movieInfo = new MovieInfo();
 
     /**
      * @throws MalformedURLException
@@ -49,10 +50,10 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
     public FinnikoSAXParser() throws MalformedURLException {
         super();
     }
+    
 
     @Override
     public List<MovieInfo> parseMovies(String areaId) {
-        final MovieInfo movieInfo = new MovieInfo();
         final MovieTrailer movieTrailer = new MovieTrailer();
         final List<MovieInfo> movies = new ArrayList<MovieInfo>();
 
@@ -67,8 +68,8 @@ public class FinnikoSAXParser extends BaseFinnkinoParser {
 
             @Override
             public void end() {
-                movies.add(movieInfo.copy());
-                movieInfo.clean();
+                movies.add(movieInfo);
+                movieInfo = new MovieInfo();
             }
         });
         
