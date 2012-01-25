@@ -1,12 +1,11 @@
 package org.androidaalto.droidkino;
 
-import java.net.URL;
-import java.util.Map;
-
-
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageView;
+
+import java.net.URL;
+import java.util.Map;
 
 
 /**
@@ -26,15 +25,14 @@ public class ImageHelper{
         Map<String, Drawable> movieDrawables = cache.getMovieDrawables();
         if (movieDrawables.containsKey(url)) {
             imageView.setImageDrawable(movieDrawables.get(url));
-        } else {
-            URL thumb_u;
+        } else if (url != null){
             try {
-                thumb_u = new URL(url);
+                URL thumb_u = new URL(url);
                 Drawable largePortraitDrawable = Drawable.createFromStream(thumb_u.openStream(), "src");
                 imageView.setImageDrawable(largePortraitDrawable);
                 movieDrawables.put(url, largePortraitDrawable);
             } catch (Exception e) {
-                Log.d(LOG_TAG, e.getMessage());
+                Log.e(LOG_TAG, "Unable to load image", e);
                 imageView.setImageResource(defaultIcon);
             }
         }
