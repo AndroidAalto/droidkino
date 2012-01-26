@@ -124,7 +124,6 @@ public class DroidkinoMain extends FragmentActivity {
             // with this one inside the frame.
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_container, movieListFragment);
-            ft.addToBackStack(null);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
         }
@@ -164,7 +163,6 @@ public class DroidkinoMain extends FragmentActivity {
         // Create dummy empty fragment. Used to display a progress icon
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, MovieListFragment.newInstance(null));
-        ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }
