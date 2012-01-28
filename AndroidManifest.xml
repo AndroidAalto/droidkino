@@ -29,7 +29,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".activities.MovieList"/>
+		<activity android:name=".activities.MovieListFragment"/>
 		<activity android:name=".activities.MovieDetail"/>
 		<activity android:name=".activities.ScheduleList"/>
 		<activity android:name=".activities.SearchSchedule"/>
