@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
+<!--
 		/*******************************************************************************
 
 		Copyright: 2011 Android Aalto Community This file is part of
@@ -16,26 +16,55 @@
 		02110-1301 USA
 
 		******************************************************************************/
-	-->
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
-	<TextView android:layout_width="match_parent" android:text="droidKINO"
-		android:layout_height="wrap_content" android:id="@+id/main_title"
-		android:textSize="45sp"></TextView>
-	<TableLayout android:stretchColumns="0,1" 
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-		<TableRow android:layout_weight="1">
-			<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:padding="20dip">
-				<Button android:id="@+id/movieListButton" android:text="Movie List" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-			</LinearLayout>
-		</TableRow>
-		<TableRow android:layout_weight="1">
-			<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:padding="20dip">
-				<Button android:id="@+id/searchScheduleButton" android:text="Search Schedules" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
-			</LinearLayout>
-		</TableRow>
-	</TableLayout>
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:weightSum="2">
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </FrameLayout>
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:stretchColumns="0,1" 
+        android:layout_weight="1">
+
+        <TableRow android:layout_weight="1" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="20dip" >
+
+                <Button
+                    android:id="@+id/movieListButton"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Movie List" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow android:layout_weight="1" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="20dip" >
+
+                <Button
+                    android:id="@+id/searchScheduleButton"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Search Schedules" />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
 
 </LinearLayout>
