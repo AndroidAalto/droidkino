@@ -30,4 +30,5 @@
     <string name="search">Search</string>
     <string name="imdb_rating">IMDB Rating</string>
     <string name="search_schedules">Search Schedules</string>
+    <string name="movie_poster">Movie poster</string>
 </resources>
