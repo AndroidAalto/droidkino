@@ -141,17 +141,7 @@ public class DroidkinoMain extends FragmentActivity {
         setContentView(R.layout.main);
 
         // gather references to the buttons
-        Button movieListButton = (Button) findViewById(R.id.movieListButton);
         Button searchScheduleButton = (Button) findViewById(R.id.searchScheduleButton);
-
-        // set the listeners with simple intents to transition to the
-        // corresponding activity
-        movieListButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent movieListIntent = new Intent(DroidkinoMain.this, MovieListFragment.class);
-                startActivity(movieListIntent);
-            }
-        });
 
         searchScheduleButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

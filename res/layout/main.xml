@@ -20,8 +20,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    android:weightSum="2">
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    android:weightSum="2" >
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -33,37 +34,21 @@
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:stretchColumns="0,1" 
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:stretchColumns="0,1" >
+
+        <TableRow
+            android:id="@+id/empty_row"
+            android:layout_weight="1" />
 
         <TableRow android:layout_weight="1" >
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:padding="20dip" >
-
-                <Button
-                    android:id="@+id/movieListButton"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:text="Movie List" />
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow android:layout_weight="1" >
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:padding="20dip" >
-
-                <Button
-                    android:id="@+id/searchScheduleButton"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:text="Search Schedules" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/searchScheduleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:text="@string/search_schedules" />
         </TableRow>
     </TableLayout>
 
