@@ -74,6 +74,10 @@
 			android:layout_marginTop="5dp"
 			android:stepSize="0.1"
 			android:numStars="5"/>
+		<Button android:id="@+id/facebookButton"
+		    android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="F"/>
 	</LinearLayout>
     
     <LinearLayout android:orientation="vertical" 

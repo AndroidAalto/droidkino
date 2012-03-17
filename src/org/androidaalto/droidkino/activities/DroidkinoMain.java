@@ -28,6 +28,11 @@ import org.androidaalto.droidkino.R;
 import org.androidaalto.droidkino.beans.MovieInfo;
 import org.androidaalto.droidkino.service.DataFetchService;
 
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -49,6 +54,9 @@ import java.util.List;
  * calls the DataFetchService which downloads the info from the FinnKino server.
  */
 public class DroidkinoMain extends FragmentActivity {
+    
+    
+    
     public static final String APP_PREFS_FILE = "appx prefs file";
 
     public static final String LOG_TAG = DroidkinoMain.class.getCanonicalName();
@@ -155,7 +163,11 @@ public class DroidkinoMain extends FragmentActivity {
         ft.replace(R.id.fragment_container, MovieListFragment.newInstance(null));
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+        
+        
+        
     }
+    
 
     @Override
     protected void onStop() {
