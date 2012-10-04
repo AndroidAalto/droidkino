@@ -167,7 +167,7 @@ public class SearchSchedule extends Activity {
         StringBuilder dateText = new StringBuilder();
         dateText.append(pad(date.get(Calendar.DAY_OF_MONTH)));
         dateText.append(".");
-        dateText.append(pad(date.get(Calendar.MONTH)));
+        dateText.append(pad(date.get(Calendar.MONTH) + 1));
         dateText.append(".");
         dateText.append(date.get(Calendar.YEAR));
         dateButton.setText(dateText.toString());
